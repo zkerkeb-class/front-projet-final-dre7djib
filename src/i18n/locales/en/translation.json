@@ -1,0 +1,41 @@
+{
+    "login": {
+        "greeting": "Hello,",
+        "welcome": "Welcome Back",
+        "welcomeMessage": "Hey, welcome back to your special place",
+        "email": {
+            "placeholder": "example@email.com"
+        },
+        "password": {
+            "placeholder": "••••••••••••"
+        },
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot Password?",
+        "signIn": "Sign In",
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign Up",
+        "signingIn": "Signing in...",
+        "error": {
+            "invalidCredentials": "Invalid email or password",
+            "networkError": "Network error. Please try again.",
+            "toast": {
+                "defaultError": "A connection error occurred. Please try again.",
+                "networkError": "Unable to connect to the server. Please check your internet connection."
+            }
+        }
+    },
+    "hero": {
+        "title": "Turn your road trip",
+        "titleh1": "into an",
+        "titleSpan": "adventure",
+        "subtitle": "Find all the best stops at your destination and along the way.",
+        "explore": "Not sure where to go?",
+        "exploreLink": "Explore the map"
+    },
+    "nav": {
+        "about": "Login",
+        "start": "Start",
+        "contact": "Contact",
+        "profile": "Profile"
+    }
+}

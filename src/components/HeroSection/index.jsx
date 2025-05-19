@@ -17,7 +17,7 @@ const HeroSection = () => {
           {t('hero.subtitle')}
         </p>
         <div className="explore-map">
-          <p>{t('hero.explore')} <a href="#map">{t('hero.exploreLink')} <span>→</span></a></p>
+          <p>{t('hero.explore')} <a href="/map">{t('hero.exploreLink')} <span>→</span></a></p>
         </div>
       </div>
       <div className="hero-image">

@@ -1,0 +1,41 @@
+{
+    "login": {
+        "greeting": "Bonjour,",
+        "welcome": "Bon retour",
+        "welcomeMessage": "Hey, ravi de vous revoir dans votre espace",
+        "email": {
+            "placeholder": "exemple@email.com"
+        },
+        "password": {
+            "placeholder": "••••••••••••"
+        },
+        "rememberMe": "Se souvenir de moi",
+        "forgotPassword": "Mot de passe oublié ?",
+        "signIn": "Se connecter",
+        "noAccount": "Vous n'avez pas de compte ?",
+        "signUp": "S'inscrire",
+        "signingIn": "Connexion en cours...",
+        "error": {
+            "invalidCredentials": "Email ou mot de passe invalide",
+            "networkError": "Erreur réseau. Veuillez réessayer."
+        },
+        "toast": {
+            "defaultError": "Une erreur de connexion s'est produite. Veuillez réessayer.",
+            "networkError": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet."
+        }
+    },
+    "hero": {
+        "title": "Transforme ton voyage",
+        "titleh1": "en une",
+        "titleSpan": "composition",
+        "subtitle": "Trouve les meilleurs arrêts à ta destination et tout au long de ton parcours.",
+        "explore": "Pas sûr où aller ?",
+        "exploreLink": "Explorer la carte"
+    },
+    "nav": {
+        "about": "Se Connecter",
+        "start": "Démarrer",
+        "contact": "Contact",
+        "profile": "Profil"
+    }
+}

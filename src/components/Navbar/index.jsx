@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router";
 import { useTranslation } from 'react-i18next';
 import './index.css';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = sessionStorage.getItem('authToken');
+      setIsAuthenticated(!!token);
+    };
+
+    checkAuth();
+    window.addEventListener('storage', checkAuth);
+
+    return () => {
+      window.removeEventListener('storage', checkAuth);
+    };
+  }, []);
 
   const handleHamburgerClick = () => {
     setMenuOpen(!menuOpen);
@@ -25,6 +40,15 @@ function Navbar() {
     i18n.changeLanguage(lng);
   };
 
+  const renderNavLinks = () => (
+    <>
+      {!isAuthenticated && <li><Link to="/login" onClick={handleLinkClick}>{t('nav.about')}</Link></li>}
+      {isAuthenticated && <li><Link to="/profile" onClick={handleLinkClick}>{t('nav.profile')}</Link></li>}
+      <li><Link to="/map" onClick={handleLinkClick}>{t('nav.start')}</Link></li>
+      <li><Link to="/contact" onClick={handleLinkClick}>{t('nav.contact')}</Link></li>
+    </>
+  );
+
   return (
     <div>
       <nav className="navbar">
@@ -34,23 +58,19 @@ function Navbar() {
           </Link>
         </div>
         <div className="navbar_hamburger" onClick={handleHamburgerClick}>
-            <div className={menuOpen ? "bar open" : "bar"}></div>
-            <div className={menuOpen ? "bar open" : "bar"}></div>
-            <div className={menuOpen ? "bar open" : "bar"}></div>
+          <div className={menuOpen ? "bar open" : "bar"}></div>
+          <div className={menuOpen ? "bar open" : "bar"}></div>
+          <div className={menuOpen ? "bar open" : "bar"}></div>
         </div>
         {menuOpen && (
-            <div className="navbar_overlay" onClick={handleOverlayClick}>
+          <div className="navbar_overlay" onClick={handleOverlayClick}>
             <ul className={menuOpen ? "navbar_links open" : "navbar_links"}>
-                <li><Link to="/about" onClick={handleLinkClick}>{t('nav.about')}</Link></li>
-                <li><Link to="/map" onClick={handleLinkClick}>{t('nav.start')}</Link></li>
-                <li><Link to="/contact" onClick={handleLinkClick}>{t('nav.contact')}</Link></li>
+              {renderNavLinks()}
             </ul>
-            </div>
+          </div>
         )}
         <ul className={!menuOpen ? "navbar_links" : "navbar_links desktop-hide"}>
-          <li><Link to="/about" onClick={handleLinkClick}>{t('nav.about')}</Link></li>
-          <li><Link to="/map" onClick={handleLinkClick}>{t('nav.start')}</Link></li>
-          <li><Link to="/contact" onClick={handleLinkClick}>{t('nav.contact')}</Link></li>
+          {renderNavLinks()}
           <li className="language-selector">
             <button 
               className={i18n.language === 'en' ? 'active' : ''} 
