@@ -5,7 +5,7 @@ import { API_ENDPOINTS, handleApiResponse } from '../../config/api';
 import Toast from '../Toast';
 import './index.css';
 
-const LoginPage = () => {
+const SignUp = () => {
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -16,9 +16,10 @@ const LoginPage = () => {
     }, []);
 
     const [formData, setFormData] = useState({
+        name: '',
         email: '',
         password: '',
-        rememberMe: false
+        confirmPassword: ''
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +27,10 @@ const LoginPage = () => {
     const [toastMessage, setToastMessage] = useState('');
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         }));
     };
 
@@ -39,31 +40,31 @@ const LoginPage = () => {
         setIsLoading(true);
         setShowToast(false);
 
+        if (formData.password !== formData.confirmPassword) {
+            setError(t('signup.error.passwordMismatch'));
+            setIsLoading(false);
+            return;
+        }
+
         try {
-            const response = await fetch(API_ENDPOINTS.LOGIN, {
+            const response = await fetch(API_ENDPOINTS.SIGNUP, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    name: formData.name,
                     email: formData.email,
                     password: formData.password,
                 }),
             });
 
-            const data = await handleApiResponse(response);
-            
-            sessionStorage.setItem('authToken', data.access_token);
-            
-            if (formData.rememberMe) {
-                localStorage.setItem('authToken', data.access_token);
-            }
-
-            window.location.href = '/';
+            await handleApiResponse(response);
+            window.location.href = '/login';
             
         } catch (err) {
-            setError(err.message || t('login.error.unknownError'));
-            setToastMessage(err.message || t('toast.error.unknownError'));
+            setError(err.message || t('signup.error.networkError'));
+            setToastMessage(err.message || t('toast.networkError'));
             setShowToast(true);
         } finally {
             setIsLoading(false);
@@ -73,19 +74,31 @@ const LoginPage = () => {
     return (
         <div className="login-container">
             <div className="login-box">
-                <h1>{t('login.greeting')}</h1>
-                <h2>{t('login.welcome')}</h2>
-                <p className="welcome-text">{t('login.welcomeMessage')}</p>
+                <h1>{t('signup.title')}</h1>
+                <h2>{t('signup.subtitle')}</h2>
+                <p className="welcome-text">{t('signup.welcomeMessage')}</p>
 
                 <form onSubmit={handleSubmit}>
                     {error && <div className="error-message">{error}</div>}
+                    
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder={t('signup.name.placeholder')}
+                            required
+                        />
+                    </div>
+
                     <div className="form-group">
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder={t('login.email.placeholder')}
+                            placeholder={t('signup.email.placeholder')}
                             required
                         />
                     </div>
@@ -96,24 +109,20 @@ const LoginPage = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            placeholder={t('login.password.placeholder')}
+                            placeholder={t('signup.password.placeholder')}
                             required
                         />
                     </div>
 
-                    <div className="form-options">
-                        <label className="remember-me">
-                            <input
-                                type="checkbox"
-                                name="rememberMe"
-                                checked={formData.rememberMe}
-                                onChange={handleChange}
-                            />
-                            <span>{t('login.rememberMe')}</span>
-                        </label>
-                        <Link to="/forgot-password" className="forgot-password">
-                            {t('login.forgotPassword')}
-                        </Link>
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            placeholder={t('signup.confirmPassword.placeholder')}
+                            required
+                        />
                     </div>
 
                     <button 
@@ -121,11 +130,11 @@ const LoginPage = () => {
                         className="sign-in-button"
                         disabled={isLoading}
                     >
-                        {isLoading ? t('login.signingIn') : t('login.signIn')}
+                        {isLoading ? t('signup.loading') : t('signup.submit')}
                     </button>
 
                     <div className="signup-prompt">
-                        {t('login.noAccount')} <Link to="/signup">{t('login.signUp')}</Link>
+                        {t('signup.haveAccount')} <Link to="/login">{t('signup.signIn')}</Link>
                     </div>
                 </form>
             </div>
@@ -140,4 +149,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default SignUp;

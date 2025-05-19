@@ -31,7 +31,6 @@ input[type="password"] {
     transition: all 0.3s ease;
 }
 
-/* Styles responsifs */
 @media (min-width: 1200px) {
     .login-box {
         padding: 2rem;
@@ -168,7 +167,6 @@ input[type="password"]:focus {
     text-decoration: underline;
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .login-box {
         width: 75%;
@@ -207,9 +205,9 @@ input[type="password"]:focus {
 }
 
 .error-message {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
+    color: var(--error-color);
+    background-color: var(--error-bg);
+    border: 1px solid var(--error-border);
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 20px;
@@ -217,6 +215,6 @@ input[type="password"]:focus {
 }
 
 .sign-in-button:disabled {
-    background-color: #cccccc;
+    background-color: var(--button-disabled);
     cursor: not-allowed;
 }

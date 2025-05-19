@@ -17,11 +17,33 @@
         "signingIn": "Connexion en cours...",
         "error": {
             "invalidCredentials": "Email ou mot de passe invalide",
-            "networkError": "Erreur réseau. Veuillez réessayer."
+            "networkError": "Erreur réseau. Veuillez réessayer.",
+            "unknownError": "Une erreur inconnue est survenue. Veuillez réessayer."
+        }
+    },
+    "signup": {
+        "title": "Créer un compte",
+        "subtitle": "Rejoignez-nous",
+        "welcomeMessage": "Commencez votre voyage avec nous aujourd'hui",
+        "name": {
+          "placeholder": "Nom complet"
         },
-        "toast": {
-            "defaultError": "Une erreur de connexion s'est produite. Veuillez réessayer.",
-            "networkError": "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet."
+        "email": {
+          "placeholder": "Adresse email"
+        },
+        "password": {
+          "placeholder": "Mot de passe"
+        },
+        "confirmPassword": {
+          "placeholder": "Confirmer le mot de passe"
+        },
+        "loading": "Création du compte...",
+        "submit": "Créer un compte",
+        "haveAccount": "Vous avez déjà un compte ?",
+        "signIn": "Se connecter",
+        "error": {
+          "passwordMismatch": "Les mots de passe ne correspondent pas",
+          "networkError": "Une erreur est survenue lors de l'inscription"
         }
     },
     "hero": {

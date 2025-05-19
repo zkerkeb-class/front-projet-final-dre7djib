@@ -4,6 +4,7 @@ import {
 import HomePage from "../screens/HomePage";
 import Navbar from "../components/Navbar";
 import LoginPage from "../screens/LoginPage";
+import SignUpPage from "../screens/SignUpPage";
 
 let router = createBrowserRouter([
     { 
@@ -16,7 +17,11 @@ let router = createBrowserRouter([
             {
                 path: "/login",
                 Component: LoginPage,
-            }  
+            },
+            {
+                path: "/signup",
+                Component: SignUpPage,
+            }
         ]
     }
 ]);
