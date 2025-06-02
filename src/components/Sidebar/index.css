@@ -1,0 +1,136 @@
+.sidebar {
+    width: 80px;
+    height: 100vh;
+    background-color: var(--white-color);
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 0;
+    box-shadow: 2px 0 5px var(--shadow-color);
+    z-index: 1000;
+}
+
+.sidebar-item {
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar-item i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.sidebar-item span {
+    font-size: 12px;
+    text-align: center;
+}
+
+.sidebar-item:hover {
+    color: var(--accent-color);
+    background-color: var(--light-background);
+}
+
+.sidebar-item.active {
+    color: var(--primary-color);
+    background-color: var(--background-color);
+}
+
+.create-trip {
+    margin-top: auto;
+    color: var(--accent-color);
+}
+
+.create-trip:hover {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}
+
+.itinerary-panel {
+    position: fixed;
+    top: 0;
+    left: 80px;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--white-color);
+    box-shadow: 2px 0 5px var(--shadow-color);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+}
+
+.itinerary-panel.open {
+    transform: translateX(0);
+}
+
+.itinerary-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.itinerary-header h2 {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: var(--accent-color);
+}
+
+.itinerary-content {
+    padding: 20px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+@media (max-width: 768px) {
+    .itinerary-panel {
+        left: 60px;
+        width: calc(100vw - 60px);
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar-item i {
+        font-size: 20px;
+    }
+
+    .sidebar-item span {
+        font-size: 10px;
+    }
+}

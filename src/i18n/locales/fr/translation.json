@@ -59,5 +59,12 @@
         "start": "Démarrer",
         "contact": "Contact",
         "profile": "Profil"
+    },
+    "sidebar": {
+        "explore": "Explorer",
+        "map": "Carte",
+        "itinerary": "Itinéraire",
+        "myTrips": "Mes Voyages",
+        "startTrip": "Nouveau"
     }
 }

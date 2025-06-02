@@ -59,5 +59,12 @@
         "start": "Start",
         "contact": "Contact",
         "profile": "Profile"
+    },
+    "sidebar": {
+        "explore": "Explore",
+        "map": "Map",
+        "itinerary": "Itinerary",
+        "myTrips": "My Trips",
+        "startTrip": "Start Trip"
     }
 }
