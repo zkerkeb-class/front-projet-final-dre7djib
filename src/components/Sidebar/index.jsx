@@ -63,7 +63,7 @@ const Sidebar = () => {
                     </button>
                 </div>
                 <div className="itinerary-content">
-                    {/* Itinerary content will go here */}
+                    {/* TODO Content*/}
                 </div>
             </div>
 

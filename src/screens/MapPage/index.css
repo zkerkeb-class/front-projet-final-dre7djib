@@ -1,0 +1,36 @@
+.map-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Sidebar avec taille responsive */
+:global(.sidebar) {
+    width: 25%;
+    min-width: 15rem;
+    max-width: 20rem;
+}
+
+/* Map prend l'espace restant */
+:global(.map) {
+    flex: 1;
+    height: 100%;
+}
+
+/* Adaptation pour les écrans mobiles */
+@media screen and (max-width: 768px) {
+    .map-container {
+        flex-direction: column;
+    }
+
+    :global(.sidebar) {
+        width: 100%;
+        max-width: none;
+        height: 30vh;
+        min-height: 15rem;
+    }
+
+    :global(.map) {
+        height: 70vh;
+    }
+}

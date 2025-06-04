@@ -50,7 +50,7 @@ function Navbar() {
   );
 
   return (
-    <div>
+    <div className="layout">
       <nav className="navbar">
         <div className="navbar_logo">
           <Link to="/">
@@ -87,7 +87,7 @@ function Navbar() {
           </li>
         </ul>
       </nav>
-      <main>
+      <main className="main-content">
         <Outlet />
       </main>
     </div>

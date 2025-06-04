@@ -1,14 +1,11 @@
 .sidebar {
     width: 80px;
-    height: 100vh;
+    height: 100%;
     background-color: var(--white-color);
     position: fixed;
-    left: 0;
-    top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 100px 0;
     box-shadow: 2px 0 5px var(--shadow-color);
     z-index: 1000;
 }
@@ -45,7 +42,6 @@
 }
 
 .create-trip {
-    margin-top: auto;
     color: var(--accent-color);
 }
 
@@ -56,7 +52,6 @@
 
 .itinerary-panel {
     position: fixed;
-    top: 0;
     left: 80px;
     height: 100vh;
     width: 300px;
