@@ -66,5 +66,31 @@
         "itinerary": "Itinéraire",
         "myTrips": "Mes Voyages",
         "startTrip": "Nouveau"
+    },
+    "createTrip": {
+        "title": "Créer un nouveau voyage",
+        "form": {
+            "title": "Titre",
+            "titleRequired": "Le titre est requis",
+            "description": "Description",
+            "descriptionRequired": "La description est requise",
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "cancel": "Annuler",
+            "create": "Créer"
+        },
+        "errors": {
+            "notAuthenticated": "Vous devez être connecté pour créer un voyage",
+            "invalidSession": "Session invalide, veuillez vous reconnecter",
+            "sessionExpired": "Session expirée, veuillez vous reconnecter",
+            "creationError": "Une erreur est survenue lors de la création du voyage"
+        },
+        "success": {
+            "created": "Voyage créé avec succès !"
+        }
+    },
+    "toast": {
+        "defaultError": "Une erreur est survenue",
+        "success": "Opération réussie"
     }
 }

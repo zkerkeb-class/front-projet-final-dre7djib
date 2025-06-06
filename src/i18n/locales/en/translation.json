@@ -66,5 +66,27 @@
         "itinerary": "Itinerary",
         "myTrips": "My Trips",
         "startTrip": "Start Trip"
+    },
+    "createTrip": {
+        "title": "Create New Trip",
+        "form": {
+            "title": "Title",
+            "titleRequired": "Title is required",
+            "description": "Description",
+            "descriptionRequired": "Description is required",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "cancel": "Cancel",
+            "create": "Create"
+        },
+        "errors": {
+            "notAuthenticated": "You must be logged in to create a trip",
+            "invalidSession": "Invalid session, please log in again",
+            "sessionExpired": "Session expired, please log in again",
+            "creationError": "An error occurred while creating the trip"
+        },
+        "success": {
+            "created": "Trip created successfully!"
+        }
     }
 }

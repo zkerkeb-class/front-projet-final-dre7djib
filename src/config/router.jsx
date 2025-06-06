@@ -26,6 +26,10 @@ let router = createBrowserRouter([
             {
                 path: "/map",
                 Component: MapPage,
+            },
+            {
+                path: "/map/:id",
+                Component: MapPage,
             }
         ]
     }

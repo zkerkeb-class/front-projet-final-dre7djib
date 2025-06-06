@@ -1,20 +1,7 @@
 .map-container {
     display: flex;
     width: 100vw;
-    height: 100vh;
-}
-
-/* Sidebar avec taille responsive */
-:global(.sidebar) {
-    width: 25%;
-    min-width: 15rem;
-    max-width: 20rem;
-}
-
-/* Map prend l'espace restant */
-:global(.map) {
-    flex: 1;
-    height: 100%;
+    height: calc(90vh - var(--navbar-height));
 }
 
 /* Adaptation pour les écrans mobiles */

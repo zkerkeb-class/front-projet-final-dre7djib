@@ -1,7 +1,6 @@
 .map {
-    height: 100%;
-    width: 100%;
-    position: relative;
+    height: calc(95vh - var(--navbar-height));
+    width: 100vw;
 }
 
 #map-container {
@@ -12,4 +11,37 @@
 .mapboxgl-map {
     height: 100%;
     width: 100%;
+}
+
+.poi-popup {
+    padding: 10px;
+}
+
+.poi-popup h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.poi-popup p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Style pour le popup Mapbox */
+.mapboxgl-popup-content {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-popup-close-button {
+    font-size: 16px;
+    color: #666;
+    padding: 5px;
+}
+
+.mapboxgl-popup-close-button:hover {
+    background-color: #f5f5f5;
+    color: #333;
 }

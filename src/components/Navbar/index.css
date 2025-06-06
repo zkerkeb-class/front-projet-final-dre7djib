@@ -13,19 +13,6 @@
 .desktop-hide {
   display: none !important;
 }
-.navbar {
-  display: flex;
-  width: 100vw;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  background-color: var(--navbar-bg);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 10000;
-}
 
 .navbar a {
   color: var(--navbar-text);
@@ -224,7 +211,7 @@
 
 .navbar {
     display: flex;
-    width: 100%;
+    width: 100vw;
     justify-content: space-between;
     align-items: center;
     padding: 0;
