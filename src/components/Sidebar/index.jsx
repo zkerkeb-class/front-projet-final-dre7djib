@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import CreateTripPopup from '../CreateTripPopup';
 import TripsPanel from '../TripsPanel';
 import './index.css';
-import { API_ENDPOINTS } from '../../config/api';
 
-const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) => {
+const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStepClick }) => {
     const { t } = useTranslation();
     const location = useLocation();
-    const navigate = useNavigate();
+    const { id: tripId } = useParams();
     const [isItineraryOpen, setIsItineraryOpen] = useState(false);
     const [isTripsOpen, setIsTripsOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        startDate: '',
-        endDate: ''
-    });
-    const [errors, setErrors] = useState({});
 
     const isActive = (path) => {
         return location.pathname === path;
@@ -29,14 +20,16 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
         setIsTripsOpen(false);
     };
 
-    const handleMapClick = (e) => {
+    const handleMapClick = () => {
         closeAllPanels();
     };
 
     const handleItineraryClick = (e) => {
         e.preventDefault();
-        setIsItineraryOpen(true);
-        setIsTripsOpen(false);
+        if (tripId) {
+            setIsItineraryOpen(!isItineraryOpen);
+            setIsTripsOpen(false);
+        }
     };
 
     const handleTripsClick = (e) => {
@@ -45,77 +38,10 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
         setIsItineraryOpen(false);
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-        if (errors[name]) {
-            setErrors(prev => ({
-                ...prev,
-                [name]: ''
-            }));
-        }
-    };
-
-    const validateForm = () => {
-        const newErrors = {};
-        if (!formData.title.trim()) {
-            newErrors.title = 'Le titre est requis';
-        }
-        if (!formData.description.trim()) {
-            newErrors.description = 'La description est requise';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const handleStartTrip = async (e) => {
+    const handleCreateTripClick = (e) => {
         e.preventDefault();
-        if (!validateForm()) {
-            return;
-        }
-
-        const token = sessionStorage.getItem('authToken');
-        
-        if (!token) {
-            console.error('Non authentifié');
-            navigate('/login');
-            return;
-        }
-
-        try {
-            const response = await fetch(API_ENDPOINTS.TRAVEL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.status === 401) {
-                sessionStorage.removeItem('authToken');
-                navigate('/login');
-                return;
-            }
-
-            if (!response.ok) {
-                throw new Error('Erreur lors de la création du voyage');
-            }
-
-            const data = await response.json();
-            setIsCreateTripOpen(false);
-            setFormData({
-                title: '',
-                description: '',
-                startDate: '',
-                endDate: ''
-            });
-            navigate(`/map/${data.id}`);
-        } catch (error) {
-            console.error('Erreur:', error);
+        if (!tripId) {
+            setIsCreateTripOpen(true);
         }
     };
 
@@ -123,7 +49,7 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
         <>
             <div className="sidebar">
                 <Link 
-                    to="/map" 
+                    to={tripId ? `/map/${tripId}` : "/map"} 
                     className={`sidebar-item ${isActive('/map') ? 'active' : ''}`}
                     onClick={handleMapClick}
                 >
@@ -133,7 +59,7 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
 
                 <a 
                     href="#" 
-                    className={`sidebar-item ${isItineraryOpen ? 'active' : ''}`}
+                    className={`sidebar-item ${isItineraryOpen ? 'active' : ''} ${!tripId ? 'disabled' : ''}`}
                     onClick={handleItineraryClick}
                 >
                     <i className="fas fa-list"></i>
@@ -151,11 +77,8 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
 
                 <a 
                     href="#" 
-                    className={`sidebar-item create-trip ${isActive('/start-trip') ? 'active' : ''}`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setIsCreateTripOpen(true);
-                    }}
+                    className={`sidebar-item create-trip ${tripId ? 'disabled' : ''}`}
+                    onClick={handleCreateTripClick}
                 >
                     <i className="fas fa-plus"></i>
                     <span>{t('sidebar.startTrip')}</span>
@@ -170,17 +93,26 @@ const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) =
                     </button>
                 </div>
                 <div className="itinerary-content">
+                    {isLoadingSteps ? (
+                        <p>Loading steps...</p>
+                    ) : steps.length > 0 ? (
+                        <ul className="steps-list">
+                            {steps.map(step => (
+                                <li key={step.id} className="step-item" onClick={() => onStepClick(step.location)}>
+                                    <h3>{step.title}</h3>
+                                    <p>{step.description}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No steps in this trip yet.</p>
+                    )}
                 </div>
             </div>
 
             {(isItineraryOpen || isTripsOpen) && (
                 <div className="overlay" onClick={closeAllPanels}></div>
             )}
-
-            <CreateTripPopup 
-                isOpen={isCreateTripOpen}
-                onClose={() => setIsCreateTripOpen(false)}
-            />
 
             <TripsPanel
                 isOpen={isTripsOpen}

@@ -1,4 +1,6 @@
 import { React, useRef, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router';
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -7,12 +9,55 @@ import "./index.css";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJlN2RqaWIiLCJhIjoiY21hdG1kMmQwMDRucDJpcjc3aHIyd2xzNiJ9.JPVjlUEWyuQL090d0FyzfQ';
 
-const Map = ({ isCreateTripOpen = false }) => {
+const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps, flyToCoords }) => {
+    const { t } = useTranslation();
+    const { id: tripId } = useParams();
     const mapRef = useRef(null);
     const mapContainerRef = useRef(null);
     const [mapInitialized, setMapInitialized] = useState(false);
     const popupRef = useRef(null);
     const geocoderRef = useRef(null);
+    const stepMarkersRef = useRef([]);
+
+    useEffect(() => {
+        if (mapRef.current && mapInitialized) {
+            stepMarkersRef.current.forEach(marker => marker.remove());
+            stepMarkersRef.current = [];
+
+            if (steps && steps.length > 0) {
+                const newMarkers = steps.map(step => {
+                    if (!step.location) return null;
+                    const [lat, lng] = step.location.split(',').map(Number);
+                    if (isNaN(lat) || isNaN(lng)) return null;
+
+                    const marker = new mapboxgl.Marker()
+                        .setLngLat([lng, lat])
+                        .addTo(mapRef.current);
+                    return marker;
+                }).filter(Boolean);
+                
+                stepMarkersRef.current = newMarkers;
+
+                if (newMarkers.length > 0) {
+                    const bounds = new mapboxgl.LngLatBounds();
+                    newMarkers.forEach(marker => {
+                        bounds.extend(marker.getLngLat());
+                    });
+                    mapRef.current.fitBounds(bounds, { padding: 100, duration: 0 });
+                }
+            }
+        }
+    }, [steps, mapInitialized]);
+
+    useEffect(() => {
+        if (mapRef.current && mapInitialized && flyToCoords) {
+            mapRef.current.flyTo({
+                center: flyToCoords,
+                zoom: 15,
+                speed: 1.2
+            });
+        }
+    }, [flyToCoords]);
 
     const getInitialMapState = () => {
         const savedState = localStorage.getItem('mapState');
@@ -46,9 +91,11 @@ const Map = ({ isCreateTripOpen = false }) => {
                 const layers = mapRef.current.getStyle().layers;
 
                 setupPOIInteractions(layers);
+                setMapInitialized(true);
             });
 
             mapRef.current.on('moveend', () => {
+                if (mapRef.current.isMoving()) return;
                 const center = mapRef.current.getCenter().toArray();
                 const zoom = mapRef.current.getZoom();
                 localStorage.setItem('mapState', JSON.stringify({ center, zoom }));
@@ -62,7 +109,7 @@ const Map = ({ isCreateTripOpen = false }) => {
             geocoderRef.current = new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
                 mapboxgl: mapboxgl,
-                placeholder: 'Rechercher un lieu...',
+                placeholder: t('map.searchPlaceholder'),
                 types: 'country,region,place,postcode,locality,neighborhood,address,poi',
                 marker: {
                     color: '#1a237e'
@@ -75,7 +122,6 @@ const Map = ({ isCreateTripOpen = false }) => {
 
             mapRef.current.addControl(geocoderRef.current);
             mapRef.current.addControl(new mapboxgl.NavigationControl());
-            setMapInitialized(true);
         }
 
         return () => {
@@ -89,15 +135,10 @@ const Map = ({ isCreateTripOpen = false }) => {
     }, []);
 
     useEffect(() => {
-        if (geocoderRef.current && geocoderRef.current._container) {
-            const geocoderContainer = geocoderRef.current._container;
-            if (isCreateTripOpen) {
-                geocoderContainer.style.display = 'none';
-            } else {
-                geocoderContainer.style.display = 'block';
-            }
+        if (geocoderRef.current) {
+            geocoderRef.current.setPlaceholder(t('map.searchPlaceholder'));
         }
-    }, [isCreateTripOpen]);
+    }, [t]);
 
     const setupPOIInteractions = (layers) => {
         const poiLayers = layers
@@ -122,25 +163,48 @@ const Map = ({ isCreateTripOpen = false }) => {
 
             if (features.length > 0) {
                 const place = features[0];
-                console.log('Feature cliquée:', place);
 
                 const name = place.properties.name || 'Lieu sans nom';
-                const category = place.properties.class || place.properties.type || 'Non catégorisé';
-                const type = place.properties.type || 'Non spécifié';
+                const category = place.properties.category_en || 'Non catégorisé';
 
                 if (popupRef.current) {
                     popupRef.current.remove();
                 }
 
-                popupRef.current = new mapboxgl.Popup()
-                    .setLngLat(e.lngLat)
-                    .setHTML(`
-                        <div class="poi-popup">
-                            <h3>${name}</h3>
-                            <p>Catégorie: ${category}</p>
-                            <p>Type: ${type}</p>
+                const popupContent = document.createElement('div');
+                popupContent.className = 'poi-popup-container';
+                popupContent.innerHTML = `
+                    <h3>${name}</h3>
+                    <div class="poi-category-info">
+                        <i class="fas fa-campground"></i>
+                        <span>${category}</span>
+                    </div>
+                    <hr class="popup-divider" />
+                    <div class="poi-actions">
+                        <div class="action">
+                            <button class="action-icon add-stop" id="popup-add-stop">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <span class="action-label">Add stop</span>
                         </div>
-                    `)
+                    </div>
+                `;
+
+                popupContent.querySelector('#popup-add-stop').addEventListener('click', () => {
+                    popupRef.current.remove();
+                    if (tripId) {
+                        setSelectedPoi(place);
+                        setIsAddStopPopupOpen(true);
+                    } else {
+                        setIsCreateTripOpen(true);
+                    }
+                });
+
+                popupRef.current = new mapboxgl.Popup({ closeButton: false, offset: 25 })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(popupContent)
                     .addTo(mapRef.current);
             }
         });

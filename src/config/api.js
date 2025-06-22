@@ -5,6 +5,8 @@ export const API_ENDPOINTS = {
     SIGNUP: `${API_BASE_URL}/users`,
     FORGOT_PASSWORD: `${API_BASE_URL}/auth/forgot-password`,
     TRAVEL: `${API_BASE_URL}/travel`,
+    STEP: `${API_BASE_URL}/step`,
+    GET_STEPS_BY_TRIP: (tripId) => `${API_BASE_URL}/step/travel/${tripId}`,
 };
 
 export const handleApiResponse = async (response) => {

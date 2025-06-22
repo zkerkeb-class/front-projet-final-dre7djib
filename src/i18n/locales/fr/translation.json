@@ -92,5 +92,8 @@
     "toast": {
         "defaultError": "Une erreur est survenue",
         "success": "Opération réussie"
+    },
+    "map": {
+        "searchPlaceholder": "Rechercher un lieu..."
     }
 }

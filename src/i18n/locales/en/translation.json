@@ -88,5 +88,8 @@
         "success": {
             "created": "Trip created successfully!"
         }
+    },
+    "map": {
+        "searchPlaceholder": "Search for a place..."
     }
 }
