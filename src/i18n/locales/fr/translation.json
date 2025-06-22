@@ -94,6 +94,23 @@
         "success": "Opération réussie"
     },
     "map": {
-        "searchPlaceholder": "Rechercher un lieu..."
+        "searchPlaceholder": "Rechercher un lieu...",
+        "search": "Rechercher",
+        "clearRoutes": "Effacer les itinéraires",
+        "step": {
+            "start": "Début",
+            "end": "Fin",
+            "routeToNext": "Itinéraire vers suivant"
+        },
+        "transport": {
+            "driving": "Voiture",
+            "walking": "Marche",
+            "flying": "Avion"
+        },
+        "poi": {
+            "addStop": "Ajouter un arrêt",
+            "noName": "Lieu sans nom",
+            "uncategorized": "Non catégorisé"
+        }
     }
 }

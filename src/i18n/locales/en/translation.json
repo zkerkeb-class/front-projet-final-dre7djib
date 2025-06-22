@@ -90,6 +90,23 @@
         }
     },
     "map": {
-        "searchPlaceholder": "Search for a place..."
+        "searchPlaceholder": "Search for a place...",
+        "search": "Search",
+        "clearRoutes": "Clear Routes",
+        "step": {
+            "start": "Start",
+            "end": "End",
+            "routeToNext": "Route to next"
+        },
+        "transport": {
+            "driving": "Car",
+            "walking": "Walking",
+            "flying": "Plane"
+        },
+        "poi": {
+            "addStop": "Add stop",
+            "noName": "Unnamed place",
+            "uncategorized": "Uncategorized"
+        }
     }
 }

@@ -28,7 +28,7 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
         e.preventDefault();
         if (tripId) {
             setIsItineraryOpen(!isItineraryOpen);
-            setIsTripsOpen(false);
+        setIsTripsOpen(false);
         }
     };
 
@@ -48,15 +48,6 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
     return (
         <>
             <div className="sidebar">
-                <Link 
-                    to={tripId ? `/map/${tripId}` : "/map"} 
-                    className={`sidebar-item ${isActive('/map') ? 'active' : ''}`}
-                    onClick={handleMapClick}
-                >
-                    <i className="fas fa-map"></i>
-                    <span>{t('sidebar.map')}</span>
-                </Link>
-
                 <a 
                     href="#" 
                     className={`sidebar-item ${isItineraryOpen ? 'active' : ''} ${!tripId ? 'disabled' : ''}`}
