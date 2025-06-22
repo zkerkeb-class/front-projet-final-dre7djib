@@ -229,7 +229,6 @@
     height: calc(100vh - var(--navbar-height));
 }
 
-/* Ajoutez cette variable CSS dans votre thème */
 :root {
     --navbar-height: 60px;
 }

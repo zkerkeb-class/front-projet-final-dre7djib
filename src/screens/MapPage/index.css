@@ -4,7 +4,6 @@
     height: calc(90vh - var(--navbar-height));
 }
 
-/* Adaptation pour les écrans mobiles */
 @media screen and (max-width: 768px) {
     .map-container {
         flex-direction: column;

@@ -26,7 +26,6 @@ input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid var(--text-color);
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s ease;
@@ -74,7 +73,6 @@ input[type="password"]:focus {
     text-align: center;
 }
 
-/* Responsive Styles */
 @media (min-width: 1200px) {
     .login-box {
         padding: 2rem;

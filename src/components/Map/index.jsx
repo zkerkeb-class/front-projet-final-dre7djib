@@ -1,15 +1,18 @@
 import { React, useRef, useEffect, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import "./index.css";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJlN2RqaWIiLCJhIjoiY21hdG1kMmQwMDRucDJpcjc3aHIyd2xzNiJ9.JPVjlUEWyuQL090d0FyzfQ';
 
-const Map = () => {
+const Map = ({ isCreateTripOpen = false }) => {
     const mapRef = useRef(null);
     const mapContainerRef = useRef(null);
     const [mapInitialized, setMapInitialized] = useState(false);
     const popupRef = useRef(null);
+    const geocoderRef = useRef(null);
 
     const getInitialMapState = () => {
         const savedState = localStorage.getItem('mapState');
@@ -49,8 +52,28 @@ const Map = () => {
                 const center = mapRef.current.getCenter().toArray();
                 const zoom = mapRef.current.getZoom();
                 localStorage.setItem('mapState', JSON.stringify({ center, zoom }));
+                
+                geocoderRef.current.setProximity({
+                    longitude: center[0],
+                    latitude: center[1]
+                });
             });
             
+            geocoderRef.current = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl,
+                placeholder: 'Rechercher un lieu...',
+                types: 'country,region,place,postcode,locality,neighborhood,address,poi',
+                marker: {
+                    color: '#1a237e'
+                },
+                proximity: {
+                    longitude: initialState.center[0],
+                    latitude: initialState.center[1]
+                }
+            });
+
+            mapRef.current.addControl(geocoderRef.current);
             mapRef.current.addControl(new mapboxgl.NavigationControl());
             setMapInitialized(true);
         }
@@ -59,10 +82,22 @@ const Map = () => {
             if (mapRef.current) {
                 mapRef.current.remove();
                 mapRef.current = null;
+                geocoderRef.current = null;
                 setMapInitialized(false);
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (geocoderRef.current && geocoderRef.current._container) {
+            const geocoderContainer = geocoderRef.current._container;
+            if (isCreateTripOpen) {
+                geocoderContainer.style.display = 'none';
+            } else {
+                geocoderContainer.style.display = 'block';
+            }
+        }
+    }, [isCreateTripOpen]);
 
     const setupPOIInteractions = (layers) => {
         const poiLayers = layers

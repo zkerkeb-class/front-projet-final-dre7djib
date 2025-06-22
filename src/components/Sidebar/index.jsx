@@ -6,12 +6,11 @@ import TripsPanel from '../TripsPanel';
 import './index.css';
 import { API_ENDPOINTS } from '../../config/api';
 
-const Sidebar = () => {
+const Sidebar = ({ isCreateTripOpen = false, setIsCreateTripOpen = () => {} }) => {
     const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const [isItineraryOpen, setIsItineraryOpen] = useState(false);
-    const [isCreateTripOpen, setIsCreateTripOpen] = useState(false);
     const [isTripsOpen, setIsTripsOpen] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
@@ -171,7 +170,6 @@ const Sidebar = () => {
                     </button>
                 </div>
                 <div className="itinerary-content">
-                    {/* TODO Content*/}
                 </div>
             </div>
 
