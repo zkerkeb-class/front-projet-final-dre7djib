@@ -105,6 +105,7 @@
         },
         "poi": {
             "addStop": "Add stop",
+            "addStopHere": "Add stop here",
             "noName": "Unnamed place",
             "uncategorized": "Uncategorized"
         }

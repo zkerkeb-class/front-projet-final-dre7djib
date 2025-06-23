@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import TripsPanel from '../TripsPanel';
 import './index.css';
 
-const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStepClick }) => {
+const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStepClick, tripInfo }) => {
     const { t } = useTranslation();
     const location = useLocation();
     const { id: tripId } = useParams();
@@ -78,7 +78,7 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
 
             <div className={`itinerary-panel ${isItineraryOpen ? 'open' : ''}`}>
                 <div className="itinerary-header">
-                    <h2>{t('sidebar.itinerary')}</h2>
+                    <h2>{tripInfo?.title || t('sidebar.itinerary')}</h2>
                     <button className="close-button" onClick={() => setIsItineraryOpen(false)}>
                         <i className="fas fa-times"></i>
                     </button>

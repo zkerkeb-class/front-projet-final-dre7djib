@@ -109,6 +109,7 @@
         },
         "poi": {
             "addStop": "Ajouter un arrêt",
+            "addStopHere": "Ajouter un arrêt ici",
             "noName": "Lieu sans nom",
             "uncategorized": "Non catégorisé"
         }

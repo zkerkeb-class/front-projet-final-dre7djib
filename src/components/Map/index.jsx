@@ -473,7 +473,6 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                            layer.id.includes('landmark'))
             .map(layer => layer.id);
 
-
         mapRef.current.on('mousemove', (e) => {
             const features = mapRef.current.queryRenderedFeatures(e.point, {
                 layers: poiLayers
@@ -500,6 +499,7 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                 const popupContent = document.createElement('div');
                 popupContent.className = 'poi-popup-container';
                 popupContent.innerHTML = `
+                    <button class="poi-popup-close-btn" id="poi-popup-close">&times;</button>
                     <h3>${name}</h3>
                     <div class="poi-category-info">
                         <i class="fas fa-campground"></i>
@@ -518,10 +518,70 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                     </div>
                 `;
 
+                popupContent.querySelector('#poi-popup-close').addEventListener('click', () => {
+                    popupRef.current.remove();
+                });
+
                 popupContent.querySelector('#popup-add-stop').addEventListener('click', () => {
                     popupRef.current.remove();
                     if (tripId) {
                         setSelectedPoi(place);
+                        setIsAddStopPopupOpen(true);
+                    } else {
+                        setIsCreateTripOpen(true);
+                    }
+                });
+
+                popupRef.current = new mapboxgl.Popup({ closeButton: false, offset: 25 })
+                    .setLngLat(e.lngLat)
+                    .setDOMContent(popupContent)
+                    .addTo(mapRef.current);
+            } else {
+                if (popupRef.current) {
+                    popupRef.current.remove();
+                }
+
+                const virtualPoi = {
+                    geometry: {
+                        coordinates: [e.lngLat.lng, e.lngLat.lat]
+                    },
+                    properties: {
+                        name: 'Nouveau stop',
+                        category_en: 'Custom location'
+                    },
+                    place_name: `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`
+                };
+
+                const popupContent = document.createElement('div');
+                popupContent.className = 'poi-popup-container';
+                popupContent.innerHTML = `
+                    <button class="poi-popup-close-btn" id="poi-popup-close">&times;</button>
+                    <h3>${t('map.poi.addStopHere') || 'Ajouter un stop ici'}</h3>
+                    <div class="poi-category-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}</span>
+                    </div>
+                    <hr class="popup-divider" />
+                    <div class="poi-actions">
+                        <div class="action">
+                            <button class="action-icon add-stop" id="popup-add-stop">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <span class="action-label">${t('map.poi.addStop') || 'Ajouter un stop'}</span>
+                        </div>
+                    </div>
+                `;
+
+                popupContent.querySelector('#poi-popup-close').addEventListener('click', () => {
+                    popupRef.current.remove();
+                });
+
+                popupContent.querySelector('#popup-add-stop').addEventListener('click', () => {
+                    popupRef.current.remove();
+                    if (tripId) {
+                        setSelectedPoi(virtualPoi);
                         setIsAddStopPopupOpen(true);
                     } else {
                         setIsCreateTripOpen(true);

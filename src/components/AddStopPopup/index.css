@@ -13,18 +13,25 @@
 
 .add-stop-popup-content {
     background: white;
+    margin-top: 12vh;
     padding: 2rem;
     border-radius: 8px;
     width: 90%;
+    height: 70%;
     max-width: 500px;
+    max-height: 80vh;
     position: relative;
     border: 1px solid var(--light-background);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .add-stop-popup-content h2 {
     margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--text-dark);
+    flex-shrink: 0;
 }
 
 .close-popup-btn {
@@ -38,35 +45,50 @@
     color: var(--text-light);
 }
 
+.add-stop-popup-content form {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
 .add-stop-popup-content .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .add-stop-popup-content .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     font-weight: 500;
     color: var(--text-dark);
+    font-size: 0.9rem;
 }
 
 .add-stop-popup-content .form-group input,
 .add-stop-popup-content .form-group textarea,
 .add-stop-popup-content .form-group select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.5rem;
     border: 1px solid var(--text-light);
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     background-color: var(--light-background);
     border-color: var(--text-light);
     color: var(--text-dark);
+}
+
+.add-stop-popup-content .form-group textarea {
+    min-height: 60px;
+    resize: vertical;
 }
 
 .add-stop-popup-content .form-actions {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    flex-shrink: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--light-background);
 }
 
 .add-stop-popup-content .form-actions button {

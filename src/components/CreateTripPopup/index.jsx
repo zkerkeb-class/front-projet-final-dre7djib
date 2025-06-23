@@ -94,6 +94,7 @@ const CreateTripPopup = ({ isOpen, onClose }) => {
                 endDate: ''
             });
             navigate(`/map/${data.id}`);
+            window.location.reload();
         } catch (error) {
             console.error('Erreur:', error);
         }

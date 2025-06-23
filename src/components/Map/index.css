@@ -140,6 +140,29 @@
 .poi-popup-container {
     width: 220px;
     font-family: inherit;
+    position: relative;
+}
+
+.poi-popup-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-light);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.poi-popup-close-btn:hover {
+    color: var(--text-dark);
 }
 
 .poi-popup-container h3 {
@@ -147,6 +170,7 @@
     font-weight: 600;
     margin: 12px 12px 8px;
     color: var(--text-dark);
+    padding-right: 20px;
 }
 
 .poi-popup-container .poi-category-info {

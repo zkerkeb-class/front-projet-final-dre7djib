@@ -16,6 +16,7 @@ const MapPage = () => {
     const [steps, setSteps] = useState([]);
     const [isLoadingSteps, setIsLoadingSteps] = useState(false);
     const [flyToCoords, setFlyToCoords] = useState(null);
+    const [tripInfo, setTripInfo] = useState(null);
 
     const fetchSteps = async () => {
         if (!tripId) {
@@ -42,6 +43,28 @@ const MapPage = () => {
         }
     };
 
+    const fetchTripInfo = async () => {
+        if (!tripId) {
+            setTripInfo(null);
+            return;
+        }
+        const token = sessionStorage.getItem('authToken');
+        try {
+            const response = await fetch(`${API_ENDPOINTS.TRAVEL}/${tripId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setTripInfo(data);
+            } else {
+                setTripInfo(null);
+            }
+        } catch (error) {
+            console.error("Error fetching trip info:", error);
+            setTripInfo(null);
+        }
+    };
+
     const handleStepClick = (location) => {
         if (!location) return;
         const [lat, lng] = location.split(',').map(Number);
@@ -52,6 +75,7 @@ const MapPage = () => {
 
     useEffect(() => {
         fetchSteps();
+        fetchTripInfo();
     }, [tripId]);
 
     const handleAddStopSubmit = async (formData) => {
@@ -101,6 +125,7 @@ const MapPage = () => {
                 steps={steps}
                 isLoadingSteps={isLoadingSteps}
                 onStepClick={handleStepClick}
+                tripInfo={tripInfo}
             />
             <Map 
                 setIsCreateTripOpen={setIsCreateTripOpen}

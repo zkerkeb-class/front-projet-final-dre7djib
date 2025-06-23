@@ -44,6 +44,7 @@ const TripsPanel = ({ isOpen, onClose }) => {
                 }
 
                 const data = await response.json();
+                console.log('Trips data received:', data);
                 setTrips(data);
             } catch (error) {
                 console.error('Error fetching trips:', error);
@@ -57,6 +58,11 @@ const TripsPanel = ({ isOpen, onClose }) => {
     }, [isOpen, navigate]);
 
     const handleTripClick = (tripId) => {
+        console.log('Trip clicked:', tripId);
+        if (!tripId) {
+            console.error('Trip ID is undefined!');
+            return;
+        }
         navigate(`/map/${tripId}`);
         onClose();
     };
