@@ -92,9 +92,28 @@
             "created": "Voyage créé avec succès !"
         }
     },
+    "addStop": {
+        "title": "Ajouter un arrêt",
+        "form": {
+            "type": "Type",
+            "title": "Titre",
+            "description": "Description",
+            "place": "Lieu",
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "cancel": "Annuler",
+            "addStop": "Ajouter l'arrêt"
+        },
+        "types": {
+            "activity": "Activité",
+            "lodging": "Hébergement"
+        }
+    },
     "toast": {
         "defaultError": "Une erreur est survenue",
-        "success": "Opération réussie"
+        "success": "Opération réussie",
+        "networkError": "Erreur réseau. Veuillez réessayer.",
+        "unknownError": "Une erreur inconnue est survenue"
     },
     "map": {
         "searchPlaceholder": "Rechercher un lieu...",

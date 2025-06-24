@@ -1,6 +1,5 @@
 import { React, useRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -10,11 +9,10 @@ import "./index.css";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJlN2RqaWIiLCJhIjoiY21hdG1kMmQwMDRucDJpcjc3aHIyd2xzNiJ9.JPVjlUEWyuQL090d0FyzfQ';
 
-const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps, flyToCoords, userPreferences, isPreferencesLoaded }) => {
+const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps, flyToCoords, userPreferences, isPreferencesLoaded, tripId }) => {
     const { t } = useTranslation();
-    const { id: tripId } = useParams();
-    const mapRef = useRef(null);
     const mapContainerRef = useRef(null);
+    const mapRef = useRef(null);
     const [mapInitialized, setMapInitialized] = useState(false);
     const popupRef = useRef(null);
     const geocoderRef = useRef(null);
@@ -236,6 +234,36 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
         }
     };
 
+    const clearMap = () => {
+        if (mapRef.current) {
+            if (popupRef.current) {
+                popupRef.current.remove();
+                popupRef.current = null;
+            }
+            
+            activeRoutesRef.current.forEach((routeInfo, routeKey) => {
+                const { routeId, airplaneId } = routeInfo;
+                
+                if (mapRef.current.getLayer(routeId)) {
+                    mapRef.current.removeLayer(routeId);
+                }
+                if (mapRef.current.getSource(routeId)) {
+                    mapRef.current.removeSource(routeId);
+                }
+                if (mapRef.current.getLayer(airplaneId)) {
+                    mapRef.current.removeLayer(airplaneId);
+                }
+                if (mapRef.current.getSource(airplaneId)) {
+                    mapRef.current.removeSource(airplaneId);
+                }
+            });
+            
+            activeRoutesRef.current.clear();
+        }
+        clearAirplaneAnimation();
+        routeCounterRef.current = 0;
+    };
+
     const showRoutesAutomatically = async () => {
         if (!isPreferencesLoaded || !userPreferences?.autoShowRoutes || !steps || steps.length < 2) {
             return;
@@ -268,6 +296,8 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
 
     useEffect(() => {
         if (mapRef.current && mapInitialized) {
+            clearMap();
+            
             stepMarkersRef.current.forEach(marker => marker.remove());
             stepMarkersRef.current = [];
 
@@ -368,7 +398,9 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
 
     useEffect(() => {
         if (isPreferencesLoaded && mapInitialized && steps && steps.length > 0) {
-            showRoutesAutomatically();
+            setTimeout(() => {
+                showRoutesAutomatically();
+            }, 100);
         }
     }, [isPreferencesLoaded, mapInitialized, steps, userPreferences]);
 

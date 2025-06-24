@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './index.css';
 
 const AddStopPopup = ({ isOpen, onClose, poi, onAddStop }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         type: 'activity',
         title: '',
@@ -42,38 +44,38 @@ const AddStopPopup = ({ isOpen, onClose, poi, onAddStop }) => {
     return (
         <div className="add-stop-popup-overlay">
             <div className="add-stop-popup-content">
-                <h2>Add a Stop</h2>
-                <form onSubmit={handleSubmit}>
+                <h2>{t('addStop.title')}</h2>
+                <form onSubmit={handleSubmit} className='add-stop-popup-form'>
                     <div className="form-group">
-                        <label>Type</label>
+                        <label>{t('addStop.form.type')}</label>
                         <select name="type" value={formData.type} onChange={handleChange}>
-                            <option value="activity">Activity</option>
-                            <option value="lodging">Lodging</option>
+                            <option value="activity">{t('addStop.types.activity')}</option>
+                            <option value="lodging">{t('addStop.types.lodging')}</option>
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Title</label>
+                        <label>{t('addStop.form.title')}</label>
                         <input type="text" name="title" value={formData.title} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
-                        <label>Description</label>
+                        <label>{t('addStop.form.description')}</label>
                         <textarea name="description" value={formData.description} onChange={handleChange}></textarea>
                     </div>
                     <div className="form-group">
-                        <label>Place</label>
+                        <label>{t('addStop.form.place')}</label>
                         <input type="text" name="place" value={formData.place} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
-                        <label>Start Date</label>
+                        <label>{t('addStop.form.startDate')}</label>
                         <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} required />
                     </div>
                     <div className="form-group">
-                        <label>End Date</label>
+                        <label>{t('addStop.form.endDate')}</label>
                         <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} />
                     </div>
                     <div className="form-actions">
-                        <button type="button" onClick={onClose} className="cancel-btn">Cancel</button>
-                        <button type="submit" className="submit-btn">Add Stop</button>
+                        <button type="button" onClick={onClose} className="cancel-btn">{t('addStop.form.cancel')}</button>
+                        <button type="submit" className="submit-btn">{t('addStop.form.addStop')}</button>
                     </div>
                 </form>
                 <button onClick={onClose} className="close-popup-btn">&times;</button>

@@ -41,7 +41,7 @@ const MapPage = () => {
 
         setIsLoadingSteps(true);
         try {
-            const response = await fetch(`${API_ENDPOINTS.STEP}?travel_id=${tripId}`, {
+            const response = await fetch(`${API_ENDPOINTS.GET_STEPS_BY_TRIP(tripId)}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             
@@ -258,6 +258,7 @@ const MapPage = () => {
                 flyToCoords={flyToCoords}
                 userPreferences={userPreferences}
                 isPreferencesLoaded={isPreferencesLoaded}
+                tripId={tripId}
             />
             <CreateTripPopup
                 isOpen={isCreateTripOpen}

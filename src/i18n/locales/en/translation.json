@@ -92,6 +92,29 @@
             "created": "Trip created successfully!"
         }
     },
+    "addStop": {
+        "title": "Add a Stop",
+        "form": {
+            "type": "Type",
+            "title": "Title",
+            "description": "Description",
+            "place": "Place",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "cancel": "Cancel",
+            "addStop": "Add Stop"
+        },
+        "types": {
+            "activity": "Activity",
+            "lodging": "Lodging"
+        }
+    },
+    "toast": {
+        "defaultError": "An error occurred",
+        "success": "Operation successful",
+        "networkError": "Network error. Please try again.",
+        "unknownError": "An unknown error occurred"
+    },
     "map": {
         "searchPlaceholder": "Search for a place...",
         "search": "Search",
