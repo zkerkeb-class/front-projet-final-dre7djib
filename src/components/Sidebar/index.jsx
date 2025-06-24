@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import TripsPanel from '../TripsPanel';
+import RoutePreferences from '../RoutePreferences';
 import './index.css';
 
-const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStepClick, tripInfo }) => {
+const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStepClick, tripInfo, onPreferencesChange, userPreferences }) => {
     const { t } = useTranslation();
     const location = useLocation();
     const { id: tripId } = useParams();
     const [isItineraryOpen, setIsItineraryOpen] = useState(false);
     const [isTripsOpen, setIsTripsOpen] = useState(false);
+    const [isPreferencesOpen, setIsPreferencesOpen] = useState(false);
 
     const isActive = (path) => {
         return location.pathname === path;
@@ -18,6 +20,7 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
     const closeAllPanels = () => {
         setIsItineraryOpen(false);
         setIsTripsOpen(false);
+        setIsPreferencesOpen(false);
     };
 
     const handleMapClick = () => {
@@ -36,6 +39,14 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
         e.preventDefault();
         setIsTripsOpen(true);
         setIsItineraryOpen(false);
+        setIsPreferencesOpen(false);
+    };
+
+    const handlePreferencesClick = (e) => {
+        e.preventDefault();
+        setIsPreferencesOpen(true);
+        setIsItineraryOpen(false);
+        setIsTripsOpen(false);
     };
 
     const handleCreateTripClick = (e) => {
@@ -68,6 +79,15 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
 
                 <a 
                     href="#" 
+                    className={`sidebar-item ${isPreferencesOpen ? 'active' : ''}`}
+                    onClick={handlePreferencesClick}
+                >
+                    <i className="fas fa-cog"></i>
+                    <span>{t('sidebar.preferences') || 'Préférences'}</span>
+                </a>
+
+                <a 
+                    href="#" 
                     className={`sidebar-item create-trip ${tripId ? 'disabled' : ''}`}
                     onClick={handleCreateTripClick}
                 >
@@ -85,23 +105,42 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
                 </div>
                 <div className="itinerary-content">
                     {isLoadingSteps ? (
-                        <p>Loading steps...</p>
+                        <p>{t('sidebar.loadingSteps')}</p>
                     ) : steps.length > 0 ? (
                         <ul className="steps-list">
-                            {steps.map(step => (
+                            {steps.map((step, index) => (
                                 <li key={step.id} className="step-item" onClick={() => onStepClick(step.location)}>
-                                    <h3>{step.title}</h3>
+                                    <h3>{index + 1} - {step.title}</h3>
                                     <p>{step.description}</p>
                                 </li>
                             ))}
                         </ul>
                     ) : (
-                        <p>No steps in this trip yet.</p>
+                        <p>{t('sidebar.noSteps')}</p>
                     )}
                 </div>
             </div>
 
-            {(isItineraryOpen || isTripsOpen) && (
+            <div className={`preferences-panel ${isPreferencesOpen ? 'open' : ''}`}>
+                <div className="preferences-header">
+                    <h2>{t('sidebar.preferences') || 'Préférences'}</h2>
+                    <button className="close-button" onClick={() => setIsPreferencesOpen(false)}>
+                        <i className="fas fa-times"></i>
+                    </button>
+                </div>
+                <div className="preferences-content">
+                    <RoutePreferences 
+                        isVisible={isPreferencesOpen}
+                        onToggle={(showRoutes) => {
+                            console.log('Routes visibility changed:', showRoutes);
+                        }}
+                        onPreferencesChange={onPreferencesChange}
+                        initialPreferences={userPreferences}
+                    />
+                </div>
+            </div>
+
+            {(isItineraryOpen || isTripsOpen || isPreferencesOpen) && (
                 <div className="overlay" onClick={closeAllPanels}></div>
             )}
 

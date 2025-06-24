@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { API_ENDPOINTS } from '../../config/api';
-import { decodeJWT } from '../../utils/jwt';
+import { decodeJWT, isTokenExpired, clearExpiredToken } from '../../utils/jwt';
 import './index.css';
 
 const TripsPanel = ({ isOpen, onClose }) => {
@@ -20,6 +20,12 @@ const TripsPanel = ({ isOpen, onClose }) => {
                 return;
             }
 
+            if (isTokenExpired(token)) {
+                clearExpiredToken();
+                navigate('/login');
+                return;
+            }
+
             const decodedToken = decodeJWT(token);
             if (!decodedToken || !decodedToken.sub) {
                 navigate('/login');
@@ -34,7 +40,7 @@ const TripsPanel = ({ isOpen, onClose }) => {
                 });
 
                 if (response.status === 401) {
-                    sessionStorage.removeItem('authToken');
+                    clearExpiredToken();
                     navigate('/login');
                     return;
                 }
@@ -44,7 +50,6 @@ const TripsPanel = ({ isOpen, onClose }) => {
                 }
 
                 const data = await response.json();
-                console.log('Trips data received:', data);
                 setTrips(data);
             } catch (error) {
                 console.error('Error fetching trips:', error);
@@ -58,7 +63,6 @@ const TripsPanel = ({ isOpen, onClose }) => {
     }, [isOpen, navigate]);
 
     const handleTripClick = (tripId) => {
-        console.log('Trip clicked:', tripId);
         if (!tripId) {
             console.error('Trip ID is undefined!');
             return;

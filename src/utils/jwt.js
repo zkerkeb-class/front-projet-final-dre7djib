@@ -14,4 +14,24 @@ export const decodeJWT = (token) => {
         console.error('Erreur lors du décodage du token JWT:', error);
         return null;
     }
+};
+
+export const isTokenExpired = (token) => {
+    try {
+        const decoded = decodeJWT(token);
+        if (!decoded || !decoded.exp) {
+            return true;
+        }
+        
+        const currentTime = Math.floor(Date.now() / 1000);
+        return decoded.exp < currentTime;
+    } catch (error) {
+        console.error('Erreur lors de la vérification d\'expiration du token:', error);
+        return true;
+    }
+};
+
+export const clearExpiredToken = () => {
+    sessionStorage.removeItem('authToken');
+    localStorage.removeItem('authToken');
 }; 

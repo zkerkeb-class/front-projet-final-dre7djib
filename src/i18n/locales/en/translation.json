@@ -65,7 +65,10 @@
         "map": "Map",
         "itinerary": "Itinerary",
         "myTrips": "My Trips",
-        "startTrip": "Start Trip"
+        "preferences": "Preferences",
+        "startTrip": "Start Trip",
+        "noSteps": "No steps in this trip yet.",
+        "loadingSteps": "Loading steps..."
     },
     "createTrip": {
         "title": "Create New Trip",
@@ -109,5 +112,13 @@
             "noName": "Unnamed place",
             "uncategorized": "Uncategorized"
         }
+    },
+    "preferences": {
+        "title": "Route Preferences",
+        "showRoutes": "Show routes",
+        "defaultTransport": "Default transport mode",
+        "autoShowRoutes": "Automatically show routes",
+        "saving": "Saving...",
+        "loading": "Loading preferences..."
     }
 }

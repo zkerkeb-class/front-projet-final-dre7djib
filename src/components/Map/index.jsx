@@ -10,7 +10,7 @@ import "./index.css";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZHJlN2RqaWIiLCJhIjoiY21hdG1kMmQwMDRucDJpcjc3aHIyd2xzNiJ9.JPVjlUEWyuQL090d0FyzfQ';
 
-const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps, flyToCoords }) => {
+const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps, flyToCoords, userPreferences, isPreferencesLoaded }) => {
     const { t } = useTranslation();
     const { id: tripId } = useParams();
     const mapRef = useRef(null);
@@ -19,10 +19,7 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
     const popupRef = useRef(null);
     const geocoderRef = useRef(null);
     const stepMarkersRef = useRef([]);
-    const routeLineRef = useRef(null);
     const airplaneAnimationRef = useRef(null);
-    const airplanePointRef = useRef(null);
-    const airplaneRouteRef = useRef(null);
     const animationCounterRef = useRef(0);
     const animationRunningRef = useRef(false);
     const routeCounterRef = useRef(0);
@@ -239,38 +236,33 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
         }
     };
 
-    const clearRoute = () => {
-        if (mapRef.current) {
-            activeRoutesRef.current.forEach((routeInfo, routeKey) => {
-                const { routeId, airplaneId } = routeInfo;
-                
-                if (mapRef.current.getLayer(routeId)) {
-                    mapRef.current.removeLayer(routeId);
-                }
-                if (mapRef.current.getSource(routeId)) {
-                    mapRef.current.removeSource(routeId);
-                }
-                if (mapRef.current.getLayer(airplaneId)) {
-                    mapRef.current.removeLayer(airplaneId);
-                }
-                if (mapRef.current.getSource(airplaneId)) {
-                    mapRef.current.removeSource(airplaneId);
-                }
-            });
-            
-            activeRoutesRef.current.clear();
+    const showRoutesAutomatically = async () => {
+        if (!isPreferencesLoaded || !userPreferences?.autoShowRoutes || !steps || steps.length < 2) {
+            return;
         }
-        clearAirplaneAnimation();
-        routeLineRef.current = null;
-        routeCounterRef.current = 0;
-    };
 
-    const getTransportModeLabel = (mode) => {
-        switch (mode) {
-            case 'driving': return 'Voiture';
-            case 'walking': return 'Marche';
-            case 'flying': return 'Avion';
-            default: return 'Voiture';
+        const defaultMode = userPreferences.defaultTransportMode || 'driving';
+        
+        for (let i = 0; i < steps.length - 1; i++) {
+            const currentStep = steps[i];
+            const nextStep = steps[i + 1];
+            
+            if (currentStep.location && nextStep.location) {
+                const [currentLat, currentLng] = currentStep.location.split(',').map(Number);
+                const [nextLat, nextLng] = nextStep.location.split(',').map(Number);
+                
+                if (!isNaN(currentLat) && !isNaN(currentLng) && !isNaN(nextLat) && !isNaN(nextLng)) {
+                    const routeKey = `auto-route-${i}-${i + 1}`;
+                    const startCoords = [currentLng, currentLat];
+                    const endCoords = [nextLng, nextLat];
+                    
+                    try {
+                        await fetchRoute(startCoords, endCoords, defaultMode, routeKey);
+                    } catch (error) {
+                        console.error(`Error fetching route ${routeKey}:`, error);
+                    }
+                }
+            }
         }
     };
 
@@ -372,7 +364,13 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                 }
             }
         }
-    }, [steps, mapInitialized]);
+    }, [steps, mapInitialized, userPreferences, isPreferencesLoaded]);
+
+    useEffect(() => {
+        if (isPreferencesLoaded && mapInitialized && steps && steps.length > 0) {
+            showRoutesAutomatically();
+        }
+    }, [isPreferencesLoaded, mapInitialized, steps, userPreferences]);
 
     useEffect(() => {
         if (mapRef.current && mapInitialized && flyToCoords) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { API_ENDPOINTS } from '../../config/api';
-import { decodeJWT } from '../../utils/jwt';
+import { decodeJWT, isTokenExpired, clearExpiredToken } from '../../utils/jwt';
 import './index.css';
 
 const CreateTripPopup = ({ isOpen, onClose }) => {
@@ -55,6 +55,12 @@ const CreateTripPopup = ({ isOpen, onClose }) => {
             return;
         }
 
+        if (isTokenExpired(token)) {
+            clearExpiredToken();
+            navigate('/login');
+            return;
+        }
+
         const decodedToken = decodeJWT(token);
         if (!decodedToken || !decodedToken.sub) {
             navigate('/login');
@@ -75,7 +81,7 @@ const CreateTripPopup = ({ isOpen, onClose }) => {
             });
 
             if (response.status === 401) {
-                sessionStorage.removeItem('authToken');
+                clearExpiredToken();
                 navigate('/login');
                 return;
             }

@@ -5,6 +5,7 @@ import Map from '../../components/Map';
 import CreateTripPopup from '../../components/CreateTripPopup';
 import AddStopPopup from '../../components/AddStopPopup';
 import { API_ENDPOINTS } from '../../config/api';
+import { decodeJWT, isTokenExpired, clearExpiredToken } from '../../utils/jwt';
 import './index.css';
 
 const MapPage = () => {
@@ -17,18 +18,39 @@ const MapPage = () => {
     const [isLoadingSteps, setIsLoadingSteps] = useState(false);
     const [flyToCoords, setFlyToCoords] = useState(null);
     const [tripInfo, setTripInfo] = useState(null);
+    const [userPreferences, setUserPreferences] = useState(null);
+    const [isPreferencesLoaded, setIsPreferencesLoaded] = useState(false);
 
     const fetchSteps = async () => {
         if (!tripId) {
             setSteps([]);
             return;
         }
-        setIsLoadingSteps(true);
         const token = sessionStorage.getItem('authToken');
+        
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        if (isTokenExpired(token)) {
+            clearExpiredToken();
+            navigate('/login');
+            return;
+        }
+
+        setIsLoadingSteps(true);
         try {
-            const response = await fetch(API_ENDPOINTS.GET_STEPS_BY_TRIP(tripId), {
+            const response = await fetch(`${API_ENDPOINTS.STEP}?travel_id=${tripId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
+            
+            if (response.status === 401) {
+                clearExpiredToken();
+                navigate('/login');
+                return;
+            }
+            
             if (response.ok) {
                 const data = await response.json();
                 setSteps(data);
@@ -49,10 +71,29 @@ const MapPage = () => {
             return;
         }
         const token = sessionStorage.getItem('authToken');
+        
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        if (isTokenExpired(token)) {
+            clearExpiredToken();
+            navigate('/login');
+            return;
+        }
+
         try {
             const response = await fetch(`${API_ENDPOINTS.TRAVEL}/${tripId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
+            
+            if (response.status === 401) {
+                clearExpiredToken();
+                navigate('/login');
+                return;
+            }
+            
             if (response.ok) {
                 const data = await response.json();
                 setTripInfo(data);
@@ -62,6 +103,69 @@ const MapPage = () => {
         } catch (error) {
             console.error("Error fetching trip info:", error);
             setTripInfo(null);
+        }
+    };
+
+    const fetchUserPreferences = async () => {
+        const token = sessionStorage.getItem('authToken');
+        
+        if (!token) {
+            setIsPreferencesLoaded(true);
+            return;
+        }
+
+        if (isTokenExpired(token)) {
+            clearExpiredToken();
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const decodedToken = decodeJWT(token);
+            
+            if (!decodedToken?.sub) {
+                setIsPreferencesLoaded(true);
+                return;
+            }
+
+            const response = await fetch(API_ENDPOINTS.GET_USER_PREFERENCES(decodedToken.sub), {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.status === 401) {
+                clearExpiredToken();
+                navigate('/login');
+                return;
+            }
+
+            if (response.ok) {
+                const data = await response.json();
+                
+                const preferences = data.routePreferences || {
+                    showRoutes: false,
+                    defaultTransportMode: 'driving',
+                    autoShowRoutes: false
+                };
+                
+                setUserPreferences(preferences);
+            } else {
+                const defaultPreferences = {
+                    showRoutes: false,
+                    defaultTransportMode: 'driving',
+                    autoShowRoutes: false
+                };
+                setUserPreferences(defaultPreferences);
+            }
+        } catch (error) {
+            console.error("Error fetching user preferences:", error);
+            const defaultPreferences = {
+                showRoutes: false,
+                defaultTransportMode: 'driving',
+                autoShowRoutes: false
+            };
+            setUserPreferences(defaultPreferences);
+        } finally {
+            setIsPreferencesLoaded(true);
         }
     };
 
@@ -76,6 +180,7 @@ const MapPage = () => {
     useEffect(() => {
         fetchSteps();
         fetchTripInfo();
+        fetchUserPreferences();
     }, [tripId]);
 
     const handleAddStopSubmit = async (formData) => {
@@ -83,6 +188,12 @@ const MapPage = () => {
 
         const token = sessionStorage.getItem('authToken');
         if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        if (isTokenExpired(token)) {
+            clearExpiredToken();
             navigate('/login');
             return;
         }
@@ -106,6 +217,12 @@ const MapPage = () => {
                 body: JSON.stringify(payload)
             });
 
+            if (response.status === 401) {
+                clearExpiredToken();
+                navigate('/login');
+                return;
+            }
+
             if (response.ok) {
                 setIsAddStopPopupOpen(false);
                 fetchSteps();
@@ -118,6 +235,10 @@ const MapPage = () => {
         }
     };
 
+    const handlePreferencesChange = (newPreferences) => {
+        setUserPreferences(newPreferences);
+    };
+
     return (
         <div className="map-container">
             <Sidebar 
@@ -126,6 +247,8 @@ const MapPage = () => {
                 isLoadingSteps={isLoadingSteps}
                 onStepClick={handleStepClick}
                 tripInfo={tripInfo}
+                onPreferencesChange={handlePreferencesChange}
+                userPreferences={userPreferences}
             />
             <Map 
                 setIsCreateTripOpen={setIsCreateTripOpen}
@@ -133,6 +256,8 @@ const MapPage = () => {
                 setSelectedPoi={setSelectedPoi}
                 steps={steps}
                 flyToCoords={flyToCoords}
+                userPreferences={userPreferences}
+                isPreferencesLoaded={isPreferencesLoaded}
             />
             <CreateTripPopup
                 isOpen={isCreateTripOpen}

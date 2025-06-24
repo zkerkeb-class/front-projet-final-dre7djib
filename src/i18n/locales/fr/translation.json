@@ -65,7 +65,10 @@
         "map": "Carte",
         "itinerary": "Itinéraire",
         "myTrips": "Mes Voyages",
-        "startTrip": "Nouveau"
+        "preferences": "Préférences",
+        "startTrip": "Nouveau",
+        "noSteps": "Aucun arrêt dans ce voyage.",
+        "loadingSteps": "Chargement des arrêts..."
     },
     "createTrip": {
         "title": "Créer un nouveau voyage",
@@ -113,5 +116,13 @@
             "noName": "Lieu sans nom",
             "uncategorized": "Non catégorisé"
         }
+    },
+    "preferences": {
+        "title": "Préférences de trajets",
+        "showRoutes": "Afficher les trajets",
+        "defaultTransport": "Mode de transport par défaut",
+        "autoShowRoutes": "Afficher automatiquement les trajets",
+        "saving": "Sauvegarde...",
+        "loading": "Chargement des préférences..."
     }
 }

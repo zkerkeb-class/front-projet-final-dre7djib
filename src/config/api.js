@@ -7,6 +7,8 @@ export const API_ENDPOINTS = {
     TRAVEL: `${API_BASE_URL}/travel`,
     STEP: `${API_BASE_URL}/step`,
     GET_STEPS_BY_TRIP: (tripId) => `${API_BASE_URL}/step/travel/${tripId}`,
+    USER_PREFERENCES: `${API_BASE_URL}/user-preferences`,
+    GET_USER_PREFERENCES: (userId) => `${API_BASE_URL}/user-preferences/${userId}`,
 };
 
 export const handleApiResponse = async (response) => {
