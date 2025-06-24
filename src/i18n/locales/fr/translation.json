@@ -70,6 +70,14 @@
         "noSteps": "Aucun arrêt dans ce voyage.",
         "loadingSteps": "Chargement des arrêts..."
     },
+    "trips": {
+        "title": "Mes Voyages",
+        "loading": "Chargement...",
+        "noTrips": "Aucun voyage trouvé",
+        "delete": "Supprimer",
+        "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce voyage ?",
+        "deleteError": "Erreur lors de la suppression du voyage"
+    },
     "createTrip": {
         "title": "Créer un nouveau voyage",
         "form": {

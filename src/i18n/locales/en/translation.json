@@ -70,6 +70,14 @@
         "noSteps": "No steps in this trip yet.",
         "loadingSteps": "Loading steps..."
     },
+    "trips": {
+        "title": "My Trips",
+        "loading": "Loading...",
+        "noTrips": "No trips found",
+        "delete": "Delete",
+        "deleteConfirmation": "Are you sure you want to delete this trip?",
+        "deleteError": "Error deleting trip"
+    },
     "createTrip": {
         "title": "Create New Trip",
         "form": {
