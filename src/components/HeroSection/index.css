@@ -17,6 +17,7 @@
   padding: 0 2rem;
   margin: 15vh auto 0;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .hero-title {
@@ -27,6 +28,8 @@
   font-weight: bold;
   width: 100%;
   word-wrap: break-word;
+  text-align: center;
+  display: block;
 }
 
 .hero-title .underline {
@@ -48,6 +51,7 @@
   font-size: 1.25rem;
   color: var(--text-color);
   margin-top: 1rem;
+  text-align: center;
 }
 
 .hero-image {
