@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { API_ENDPOINTS, handleApiResponse } from '../../config/api';
-import { decodeJWT } from '../../utils/jwt';
+import { decodeJWT, isTokenExpired, clearExpiredToken } from '../../utils/jwt';
 import Toast from '../../components/Toast';
 import './index.css';
 
@@ -28,18 +28,15 @@ function ProfilePage() {
   const [updatingPassword, setUpdatingPassword] = useState(false);
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = () => {
     const token = sessionStorage.getItem('authToken');
-    if (!token) {
+    if (!token || isTokenExpired(token)) {
+      clearExpiredToken();
       navigate('/login');
       return;
     }
     setIsAuthenticated(true);
     loadUserTrips();
-  };
+  }, []);
 
   const loadUserTrips = async () => {
     try {

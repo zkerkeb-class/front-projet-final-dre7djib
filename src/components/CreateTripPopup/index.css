@@ -14,7 +14,6 @@
 .popup-content {
     background-color: white;
     padding: 1.5rem;
-    margin-top: 12vh;
     border-radius: 8px;
     width: 90%;
     max-width: 400px;
@@ -110,4 +109,61 @@
 
 .form-actions button.primary:hover {
     background-color: #0056b3;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+    .popup-content {
+        width: 95%;
+        max-width: none;
+        margin: 1rem;
+        padding: 1.25rem;
+        max-height: 80vh;
+    }
+    
+    .popup-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .form-actions button {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .popup-content {
+        width: 98%;
+        margin: 0.5rem;
+        padding: 1rem;
+        max-height: 85vh;
+    }
+    
+    .popup-header {
+        margin-bottom: 0.75rem;
+    }
+    
+    .popup-header h2 {
+        font-size: 1rem;
+    }
+    
+    .create-trip-form {
+        gap: 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+    
+    .form-group textarea {
+        min-height: 60px;
+    }
 } 

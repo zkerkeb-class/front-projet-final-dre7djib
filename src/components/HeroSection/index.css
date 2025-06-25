@@ -50,38 +50,6 @@
   margin-top: 1rem;
 }
 
-
-@media screen and (max-width: 768px) {
-  .hero-section {
-    height: 100vh;
-  }
-
-  .hero-title {
-    font-size: 2.5rem;
-    padding: 0 0.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .hero-section {
-    height: 100vh;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-    padding: 0 0.25rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-}
-
 .hero-image {
   width: 100%;
   max-width: 1200px;
@@ -99,19 +67,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-@media screen and (max-width: 1280px) {
-  .hero-image {
-    max-width: 90%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .hero-image {
-    margin-top: 2rem;
-    max-width: 95%;
-  }
 }
 
 .explore-map {
@@ -139,8 +94,94 @@
   transform: translateX(5px);
 }
 
+/* Responsive design pour mobile */
 @media screen and (max-width: 768px) {
+  .hero-section {
+    height: 100vh;
+    padding: 0 1rem;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+    margin: 10vh auto 0;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    padding: 0 0.5rem;
+  }
+
   .hero-image {
     margin-top: 2rem;
+    max-width: 95%;
+    border-radius: 8px;
+  }
+
+  .explore-map {
+    margin-top: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-section {
+    height: 100vh;
+    padding: 0 0.5rem;
+  }
+
+  .hero-content {
+    padding: 0 0.5rem;
+    margin: 8vh auto 0;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    padding: 0 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.4;
+    padding: 0 0.25rem;
+  }
+
+  .hero-image {
+    margin-top: 1.5rem;
+    max-width: 98%;
+    border-radius: 6px;
+  }
+
+  .explore-map {
+    margin-top: 1rem;
+  }
+
+  .explore-map p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .hero-image {
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .hero-image {
+    max-width: 90%;
   }
 }

@@ -60,12 +60,12 @@ function Navbar() {
         </div>
         {menuOpen && (
           <div className="navbar_overlay" onClick={handleOverlayClick}>
-            <ul className={menuOpen ? "navbar_links open" : "navbar_links"}>
+            <ul className="navbar_links open">
               {renderNavLinks()}
             </ul>
           </div>
         )}
-        <ul className={!menuOpen ? "navbar_links" : "navbar_links desktop-hide"}>
+        <ul className="navbar_links">
           {renderNavLinks()}
         </ul>
       </nav>

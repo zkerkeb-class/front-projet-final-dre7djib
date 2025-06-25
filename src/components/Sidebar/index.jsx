@@ -30,8 +30,9 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
     const handleItineraryClick = (e) => {
         e.preventDefault();
         if (tripId) {
-            setIsItineraryOpen(!isItineraryOpen);
-        setIsTripsOpen(false);
+            setIsItineraryOpen((prev) => !prev);
+            setIsTripsOpen(false);
+            setIsPreferencesOpen(false);
         }
     };
 
@@ -44,7 +45,7 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
 
     const handlePreferencesClick = (e) => {
         e.preventDefault();
-        setIsPreferencesOpen(true);
+        setIsPreferencesOpen((prev) => !prev);
         setIsItineraryOpen(false);
         setIsTripsOpen(false);
     };
@@ -96,7 +97,12 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
                 </a>
             </div>
 
-            <div className={`itinerary-panel ${isItineraryOpen ? 'open' : ''}`}>
+            {/* Itinerary Panel : toujours présent pour l'animation slide */}
+            <div
+                className={`itinerary-panel${isItineraryOpen ? ' open' : ''}`}
+                aria-hidden={!isItineraryOpen}
+                style={{ pointerEvents: isItineraryOpen ? 'auto' : 'none' }}
+            >
                 <div className="itinerary-header">
                     <h2>{tripInfo?.title || t('sidebar.itinerary')}</h2>
                     <button className="close-button" onClick={() => setIsItineraryOpen(false)}>
@@ -121,7 +127,12 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
                 </div>
             </div>
 
-            <div className={`preferences-panel ${isPreferencesOpen ? 'open' : ''}`}>
+            {/* Preferences Panel : toujours présent pour l'animation slide */}
+            <div
+                className={`preferences-panel${isPreferencesOpen ? ' open' : ''}`}
+                aria-hidden={!isPreferencesOpen}
+                style={{ pointerEvents: isPreferencesOpen ? 'auto' : 'none' }}
+            >
                 <div className="preferences-header">
                     <h2>{t('sidebar.preferences') || 'Préférences'}</h2>
                     <button className="close-button" onClick={() => setIsPreferencesOpen(false)}>

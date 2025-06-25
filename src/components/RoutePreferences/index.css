@@ -82,4 +82,272 @@
     .preference-label select {
         width: 100%;
     }
+}
+
+.preferences-panel {
+    position: fixed;
+    left: 75px;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--white-color);
+    box-shadow: 2px 0 5px var(--shadow-color);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+}
+
+.preferences-panel.open {
+    transform: translateX(0);
+}
+
+.preferences-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.preferences-header h2 {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: var(--accent-color);
+}
+
+.preferences-content {
+    padding: 1rem;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+}
+
+.transport-modes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.transport-mode {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--light-background);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--white-color);
+}
+
+.transport-mode:hover {
+    border-color: var(--primary-color);
+    background: var(--light-background);
+}
+
+.transport-mode.selected {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+.transport-mode input[type="radio"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+}
+
+.transport-mode label {
+    flex: 1;
+    cursor: pointer;
+    font-weight: 500;
+    margin: 0;
+}
+
+.transport-mode i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.preferences-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.preferences-actions button {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preferences-actions button.primary {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+.preferences-actions button.primary:hover {
+    background: var(--accent-hover);
+}
+
+.preferences-actions button.secondary {
+    background: var(--light-background);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+}
+
+.preferences-actions button.secondary:hover {
+    background: var(--text-color);
+    color: var(--white-color);
+}
+
+.error-message {
+    color: var(--error-text);
+    background: var(--error-bg);
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--error-text);
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+    .preferences-panel {
+        left: 0;
+        width: 100vw;
+        height: 60vh;
+        top: auto;
+        bottom: 0;
+        transform: translateY(100%);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .preferences-panel.open {
+        transform: translateY(0);
+    }
+
+    .preferences-header {
+        padding: 15px 20px;
+    }
+
+    .preferences-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .preferences-content {
+        padding: 0.75rem;
+        height: calc(60vh - 50px);
+    }
+
+    .transport-modes {
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .transport-mode {
+        padding: 0.875rem;
+    }
+
+    .transport-mode input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .transport-mode label {
+        font-size: 0.95rem;
+    }
+
+    .transport-mode i {
+        font-size: 1.1rem;
+    }
+
+    .preferences-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .preferences-actions button {
+        padding: 0.875rem 1rem;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preferences-panel {
+        height: 70vh;
+    }
+
+    .preferences-content {
+        height: calc(70vh - 50px);
+    }
+
+    .preferences-header {
+        padding: 12px 16px;
+    }
+
+    .preferences-header h2 {
+        font-size: 1rem;
+    }
+
+    .preferences-content {
+        padding: 0.5rem;
+    }
+
+    .transport-modes {
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .transport-mode {
+        padding: 0.75rem;
+    }
+
+    .transport-mode input[type="radio"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .transport-mode label {
+        font-size: 0.9rem;
+    }
+
+    .transport-mode i {
+        font-size: 1rem;
+    }
+
+    .preferences-actions {
+        margin-top: 1rem;
+    }
+
+    .preferences-actions button {
+        padding: 0.75rem 1rem;
+        font-size: 15px;
+    }
+
+    .error-message {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+    }
 } 

@@ -28,6 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 h1 {
@@ -45,6 +47,8 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 button:hover {
   border-color: #646cff;
@@ -52,6 +56,49 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Améliorations pour mobile */
+@media (max-width: 768px) {
+  body {
+    place-items: flex-start;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  button {
+    padding: 0.75em 1.5em;
+    font-size: 16px; /* Évite le zoom sur iOS */
+    min-height: 44px; /* Taille minimale recommandée pour le touch */
+  }
+  
+  input, textarea, select {
+    font-size: 16px; /* Évite le zoom sur iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2em;
+  }
+  
+  button {
+    padding: 0.8em 1.8em;
+    min-height: 48px;
+  }
+}
+
+/* Désactiver le zoom sur les inputs sur iOS */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea {
+    font-size: 16px !important;
+  }
 }
 
 @media (prefers-color-scheme: light) {

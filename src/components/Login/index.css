@@ -10,25 +10,32 @@
     left: 0;
     top: 0;
     overflow-x: hidden;
+    padding: 0;
 }
 
 .login-box {
     background: var(--white-color);
-    padding: 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 85%;
-    max-width: 300px;
+    padding: 2rem 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+    width: 100%;
+    max-width: 350px;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 input[type="email"],
 input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--text-color);
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 15px;
     transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    background: #f6f6f6;
 }
 
 @media (min-width: 1200px) {
@@ -45,65 +52,158 @@ input[type="password"] {
 }
 
 @media (max-width: 768px) {
-    .login-box {
-        padding: 1.3rem;
-        max-width: 280px;
+    .login-container {
+        padding: 0.5rem;
     }
-    
+
+    .login-box {
+        padding: 1.25rem;
+        max-width: 320px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 6px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .welcome-text {
+        margin-bottom: 24px;
+        font-size: 0.9rem;
+    }
+
     input[type="email"],
     input[type="password"] {
-        padding: 8px;
-        font-size: 13px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .sign-in-button {
+        padding: 14px;
+        font-size: 16px;
     }
 }
 
 @media (max-width: 480px) {
+    .login-container {
+        padding: 0.25rem;
+    }
+
     .login-box {
         padding: 1rem;
-        max-width: 260px;
-        width: 90%;
+        max-width: 300px;
+        border-radius: 10px;
     }
-    
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 4px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .welcome-text {
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+        width: fit-content;
+    }
+
     input[type="email"],
     input[type="password"] {
-        padding: 7px;
-        font-size: 12px;
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .form-options {
+        margin-bottom: 20px;
+    }
+
+    .sign-in-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .signup-prompt {
+        margin-top: 20px;
+        font-size: 0.9rem;
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
     .login-box {
-        padding: 0.8rem;
-        max-width: 240px;
-        width: 95%;
+        padding: 0.75rem;
+        max-width: 280px;
     }
-    
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .welcome-text {
+        font-size: 0.8rem;
+    }
+
     input[type="email"],
     input[type="password"] {
-        padding: 6px;
-        font-size: 11px;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .sign-in-button {
+        padding: 10px;
+        font-size: 14px;
     }
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 2.2rem;
     margin-bottom: 8px;
     color: var(--primary-color);
+    text-align: left;
+    width: 100%;
 }
 
 h2 {
-    font-size: 28px;
+    font-size: 1.5rem;
     margin-bottom: 16px;
     color: var(--secondary-color);
+    text-align: left;
+    width: 100%;
 }
 
 .welcome-text {
     color: var(--text-color);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    text-align: left;
+    width: 100%;
+    font-size: 1rem;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    width: 100%;
 }
 
 input[type="email"]:focus,
@@ -116,7 +216,8 @@ input[type="password"]:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    width: 100%;
 }
 
 .remember-me {
@@ -124,11 +225,13 @@ input[type="password"]:focus {
     align-items: center;
     gap: 8px;
     color: var(--text-color);
+    font-size: 0.95rem;
 }
 
 .forgot-password {
     color: var(--text-color);
     text-decoration: none;
+    font-size: 0.95rem;
 }
 
 .forgot-password:hover {
@@ -142,9 +245,10 @@ input[type="password"]:focus {
     color: var(--white-color);
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 8px;
 }
 
 .sign-in-button:hover {
@@ -153,8 +257,9 @@ input[type="password"]:focus {
 
 .signup-prompt {
     text-align: center;
-    margin-top: 24px;
+    margin-top: 20px;
     color: var(--text-color);
+    font-size: 1rem;
 }
 
 .signup-prompt a {
@@ -165,43 +270,6 @@ input[type="password"]:focus {
 
 .signup-prompt a:hover {
     text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .login-box {
-        width: 75%;
-        max-width: 300px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .login-box {
-        width: 85%;
-        max-width: 280px;
-    }
-
-    h1 {
-        font-size: 22px;
-    }
-
-    h2 {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 320px) {
-    .login-box {
-        width: 90%;
-        max-width: 260px;
-    }
 }
 
 .error-message {
@@ -217,4 +285,59 @@ input[type="password"]:focus {
 .sign-in-button:disabled {
     background-color: var(--button-disabled);
     cursor: not-allowed;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 600px) {
+    .login-container {
+        padding: 0;
+        min-height: 100vh;
+        align-items: flex-start;
+    }
+    .login-box {
+        max-width: 95vw;
+        width: 95vw;
+        padding: 1.5rem 0.75rem;
+        border-radius: 12px;
+        margin: 20vh auto;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+    }
+    .welcome-text {
+        font-size: 0.95rem;
+    }
+    .sign-in-button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    input[type="email"],
+    input[type="password"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .form-group {
+        margin-bottom: 12px;
+    }
+    .signup-prompt {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-box {
+        padding: 1rem 0.25rem;
+        border-radius: 8px;
+    }
+    h1 {
+        font-size: 1.1rem;
+    }
+    .sign-in-button {
+        font-size: 0.95rem;
+        padding: 8px;
+    }
 }

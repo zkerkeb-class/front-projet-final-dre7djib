@@ -1,22 +1,36 @@
 .map-container {
     display: flex;
     width: 100vw;
-    height: calc(90vh - var(--navbar-height));
+    height: calc(100vh - var(--navbar-height));
+    overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
     .map-container {
         flex-direction: column;
+        height: calc(100vh - var(--navbar-height));
     }
 
     :global(.sidebar) {
         width: 100%;
         max-width: none;
-        height: 30vh;
-        min-height: 15rem;
+        height: auto;
+        min-height: auto;
+        flex-shrink: 0;
     }
 
     :global(.map) {
-        height: 70vh;
+        height: calc(100vh - var(--navbar-height) - 60px);
+        flex: 1;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .map-container {
+        height: calc(100vh - var(--navbar-height));
+    }
+
+    :global(.map) {
+        height: calc(100vh - var(--navbar-height) - 50px);
     }
 }

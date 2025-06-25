@@ -28,6 +28,27 @@
     color: #333;
 }
 
+.close-button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.close-button:hover {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
 .trips-content {
     padding: 1.5rem;
     height: calc(100vh - 80px);
@@ -143,4 +164,112 @@
     color: #999;
     font-size: 0.8rem;
     margin-left: 1rem;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+    .trips-panel {
+        right: -100vw;
+        width: 100vw;
+        height: 60vh;
+        top: auto;
+        bottom: 0;
+        transform: translateY(100%);
+        border-radius: 12px 12px 0 0;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .trips-panel.open {
+        right: 0;
+        transform: translateY(0);
+    }
+
+    .trips-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .trips-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .close-button {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
+    .trips-content {
+        padding: 1rem 1.5rem;
+        height: calc(60vh - 60px);
+    }
+
+    .trip-item {
+        padding: 0.875rem;
+    }
+
+    .trip-info h3 {
+        font-size: 1rem;
+    }
+
+    .trip-info p {
+        font-size: 0.85rem;
+    }
+
+    .delete-trip-btn {
+        min-width: 36px;
+        min-height: 36px;
+        padding: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .trips-panel {
+        height: 70vh;
+    }
+
+    .trips-content {
+        height: calc(70vh - 60px);
+        padding: 0.75rem 1rem;
+    }
+
+    .trips-header {
+        padding: 0.875rem 1rem;
+    }
+
+    .trips-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .close-button {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .trip-item {
+        padding: 0.75rem;
+    }
+
+    .trip-info h3 {
+        font-size: 0.95rem;
+    }
+
+    .trip-info p {
+        font-size: 0.8rem;
+    }
+
+    .trip-dates {
+        font-size: 0.75rem;
+    }
+
+    .delete-trip-btn {
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0.5rem;
+    }
+
+    .delete-trip-btn svg {
+        width: 14px;
+        height: 14px;
+    }
 } 
