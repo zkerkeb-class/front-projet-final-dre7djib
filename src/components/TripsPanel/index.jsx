@@ -52,18 +52,18 @@ const TripsPanel = ({ isOpen, onClose }) => {
                     throw new Error('Failed to fetch trips');
                 }
 
-                const data = await response.json();
-                setTrips(data);
+                const trips = await response.json();
+                setTrips(trips);
             } catch (error) {
                 console.error('Error fetching trips:', error);
-                setError('Failed to load trips');
+                setError(t('trips.loadError'));
             } finally {
                 setLoading(false);
             }
         };
 
         fetchTrips();
-    }, [isOpen, navigate]);
+    }, [isOpen, navigate, t]);
 
     const handleTripClick = (tripId) => {
         if (!tripId) {
@@ -109,15 +109,16 @@ const TripsPanel = ({ isOpen, onClose }) => {
                 return;
             }
 
-            if (response.ok) {
-                setTrips(prevTrips => prevTrips.filter(trip => trip.id !== tripId));
-            } else {
+            if (!response.ok) {
                 console.error('Failed to delete trip');
-                alert(t('trips.deleteError') || 'Erreur lors de la suppression du voyage');
+                alert(t('trips.deleteError'));
+                return;
             }
+
+            setTrips(prevTrips => prevTrips.filter(trip => trip.id !== tripId));
         } catch (error) {
             console.error('Error deleting trip:', error);
-            alert(t('trips.deleteError') || 'Erreur lors de la suppression du voyage');
+            alert(t('trips.deleteError'));
         } finally {
             setDeletingTripId(null);
         }
@@ -133,7 +134,7 @@ const TripsPanel = ({ isOpen, onClose }) => {
             </div>
             <div className="trips-content">
                 {loading ? (
-                    <div className="loading">{t('trips.loading') || 'Chargement...'}</div>
+                    <div className="loading">{t('trips.loading')}</div>
                 ) : error ? (
                     <div className="error">{error}</div>
                 ) : trips.length === 0 ? (

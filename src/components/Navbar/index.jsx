@@ -6,7 +6,7 @@ import './index.css';
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -34,10 +34,6 @@ function Navbar() {
     if (e.target.classList.contains('navbar_overlay')) {
       setMenuOpen(false);
     }
-  };
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
   };
 
   const renderNavLinks = () => (
@@ -71,20 +67,6 @@ function Navbar() {
         )}
         <ul className={!menuOpen ? "navbar_links" : "navbar_links desktop-hide"}>
           {renderNavLinks()}
-          <li className="language-selector">
-            <button 
-              className={i18n.language === 'en' ? 'active' : ''} 
-              onClick={() => changeLanguage('en')}
-            >
-              EN
-            </button>
-            <button 
-              className={i18n.language === 'fr' ? 'active' : ''} 
-              onClick={() => changeLanguage('fr')}
-            >
-              FR
-            </button>
-          </li>
         </ul>
       </nav>
       <main className="main-content">

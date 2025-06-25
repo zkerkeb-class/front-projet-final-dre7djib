@@ -14,6 +14,7 @@ const RoutePreferences = ({ isVisible, onToggle, onPreferencesChange, initialPre
         autoShowRoutes: false
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (initialPreferences) {
@@ -69,11 +70,11 @@ const RoutePreferences = ({ isVisible, onToggle, onPreferencesChange, initialPre
                 setPreferences(newPreferences);
             } else {
                 console.error('Failed to save preferences to API');
-                setPreferences(newPreferences);
+                setError(t('preferences.saveError'));
             }
         } catch (error) {
             console.error('Error saving preferences:', error);
-            setPreferences(newPreferences);
+            setError(t('preferences.saveError'));
         } finally {
             setIsLoading(false);
         }
@@ -103,9 +104,9 @@ const RoutePreferences = ({ isVisible, onToggle, onPreferencesChange, initialPre
     if (!initialPreferences) {
         return (
             <div className="route-preferences">
-                <h3>{t('preferences.title') || 'Préférences de trajets'}</h3>
+                <h3>{t('preferences.title')}</h3>
                 <div className="preferences-loading">
-                    {t('preferences.loading') || 'Chargement des préférences...'}
+                    {t('preferences.loading')}
                 </div>
             </div>
         );
@@ -123,13 +124,13 @@ const RoutePreferences = ({ isVisible, onToggle, onPreferencesChange, initialPre
                         onChange={handleToggleShowRoutes}
                         disabled={isLoading}
                     />
-                    <span>{t('preferences.showRoutes') || 'Afficher les trajets'}</span>
+                    <span>{t('preferences.showRoutes')}</span>
                 </label>
             </div>
 
             <div className="preference-item">
                 <label className="preference-label">
-                    <span>{t('preferences.defaultTransport') || 'Mode de transport par défaut'}</span>
+                    <span>{t('preferences.defaultTransport')}</span>
                     <select
                         value={preferences.defaultTransportMode}
                         onChange={(e) => handleTransportModeChange(e.target.value)}
@@ -150,13 +151,19 @@ const RoutePreferences = ({ isVisible, onToggle, onPreferencesChange, initialPre
                         onChange={handleAutoShowRoutesChange}
                         disabled={isLoading}
                     />
-                    <span>{t('preferences.autoShowRoutes') || 'Afficher automatiquement les trajets'}</span>
+                    <span>{t('preferences.autoShowRoutes')}</span>
                 </label>
             </div>
 
             {isLoading && (
                 <div className="preferences-loading">
-                    {t('preferences.saving') || 'Sauvegarde...'}
+                    {t('preferences.saving')}
+                </div>
+            )}
+            
+            {error && (
+                <div className="preferences-error">
+                    {error}
                 </div>
             )}
         </div>

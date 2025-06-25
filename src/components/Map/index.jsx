@@ -105,9 +105,6 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
     const startAirplaneAnimation = (routeGeometry, startCoords, airplaneId) => {
         if (!mapRef.current || !routeGeometry) return;
 
-        console.log('Starting airplane animation with route:', routeGeometry);
-        console.log('Start coordinates:', startCoords);
-
         const steps = 200;
         const lineDistance = turf.length(routeGeometry.features[0]);
         const arc = [];
@@ -132,8 +129,6 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                 }
             ]
         };
-
-        console.log('Airplane point created:', airplanePoint);
 
         mapRef.current.addSource(airplaneId, {
             type: 'geojson',
@@ -357,7 +352,6 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                                         const selectedMode = transportSelect.value;
                                         const startCoords = [lng, lat];
                                         const endCoords = [nextLng, nextLat];
-                                        console.log('Route coordinates:', { start: startCoords, end: endCoords });
                                         fetchRoute(startCoords, endCoords, selectedMode, routeKey);
                                         popupRef.current.remove();
                                     });
@@ -371,7 +365,6 @@ const Map = ({ setIsCreateTripOpen, setIsAddStopPopupOpen, setSelectedPoi, steps
                                         
                                         const activeRoute = activeRoutesRef.current.get(routeKey);
                                         if (activeRoute && activeRoute.transportMode !== selectedMode) {
-                                            console.log('Updating route with new transport mode:', selectedMode);
                                             fetchRoute(startCoords, endCoords, selectedMode, routeKey);
                                         }
                                     });

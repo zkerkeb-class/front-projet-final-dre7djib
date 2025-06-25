@@ -14,6 +14,11 @@ const Toast = ({ message, type = 'error', onClose }) => {
                             <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-7v2h2v-2h-2zm0-8v6h2V7h-2z" fill="currentColor"/>
                         </svg>
                     )}
+                    {type === 'success' && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1.177-7.86l-2.765-2.767L7 14.431l3.119 3.121a1 1 0 001.414 0l5.952-5.95-1.062-1.062-5.6 5.6z" fill="currentColor"/>
+                        </svg>
+                    )}
                 </div>
                 <div className="toast-message">
                     {message || t('toast.defaultError')}

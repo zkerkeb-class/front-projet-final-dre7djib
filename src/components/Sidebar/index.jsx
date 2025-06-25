@@ -132,7 +132,6 @@ const Sidebar = ({ setIsCreateTripOpen = () => {}, steps, isLoadingSteps, onStep
                     <RoutePreferences 
                         isVisible={isPreferencesOpen}
                         onToggle={(showRoutes) => {
-                            console.log('Routes visibility changed:', showRoutes);
                         }}
                         onPreferencesChange={onPreferencesChange}
                         initialPreferences={userPreferences}

@@ -76,7 +76,8 @@
         "noTrips": "No trips found",
         "delete": "Delete",
         "deleteConfirmation": "Are you sure you want to delete this trip?",
-        "deleteError": "Error deleting trip"
+        "deleteError": "Error deleting trip",
+        "loadError": "Error loading trips"
     },
     "createTrip": {
         "title": "Create New Trip",
@@ -121,7 +122,10 @@
         "defaultError": "An error occurred",
         "success": "Operation successful",
         "networkError": "Network error. Please try again.",
-        "unknownError": "An unknown error occurred"
+        "unknownError": "An unknown error occurred",
+        "error": {
+            "unknownError": "An unknown error occurred"
+        }
     },
     "map": {
         "searchPlaceholder": "Search for a place...",
@@ -150,6 +154,55 @@
         "defaultTransport": "Default transport mode",
         "autoShowRoutes": "Automatically show routes",
         "saving": "Saving...",
-        "loading": "Loading preferences..."
+        "loading": "Loading preferences...",
+        "saveError": "Error saving preferences"
+    },
+    "profile": {
+        "title": "My Profile",
+        "personalInfo": "Personal Information",
+        "changePassword": "Change Password",
+        "language": "Language",
+        "myTrips": "My Trips",
+        "logout": "Logout",
+        "passwordForm": {
+            "currentPassword": "Current Password",
+            "newPassword": "New Password",
+            "confirmPassword": "Confirm New Password",
+            "update": "Update",
+            "updating": "Updating...",
+            "cancel": "Cancel"
+        },
+        "languageForm": {
+            "title": "Select Language",
+            "french": "French",
+            "english": "English"
+        },
+        "tripsSection": {
+            "title": "My Trips",
+            "noTrips": "No trips found",
+            "loading": "Loading trips...",
+            "viewTrip": "View Trip",
+            "deleteTrip": "Delete",
+            "deleteConfirmation": "Are you sure you want to delete this trip?",
+            "createdOn": "Created on",
+            "modifiedOn": "Modified on"
+        },
+        "errors": {
+            "passwordMismatch": "New passwords do not match",
+            "currentPasswordRequired": "Current password is required",
+            "newPasswordRequired": "New password is required",
+            "passwordUpdateError": "Error updating password",
+            "tripsLoadError": "Error loading trips",
+            "tripDeleteError": "Error deleting trip"
+        },
+        "success": {
+            "passwordUpdated": "Password updated successfully!"
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "error": "Error",
+        "success": "Success"
     }
 }

@@ -76,7 +76,8 @@
         "noTrips": "Aucun voyage trouvé",
         "delete": "Supprimer",
         "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce voyage ?",
-        "deleteError": "Erreur lors de la suppression du voyage"
+        "deleteError": "Erreur lors de la suppression du voyage",
+        "loadError": "Erreur lors du chargement des voyages"
     },
     "createTrip": {
         "title": "Créer un nouveau voyage",
@@ -121,7 +122,10 @@
         "defaultError": "Une erreur est survenue",
         "success": "Opération réussie",
         "networkError": "Erreur réseau. Veuillez réessayer.",
-        "unknownError": "Une erreur inconnue est survenue"
+        "unknownError": "Une erreur inconnue est survenue",
+        "error": {
+            "unknownError": "Une erreur inconnue est survenue"
+        }
     },
     "map": {
         "searchPlaceholder": "Rechercher un lieu...",
@@ -150,6 +154,55 @@
         "defaultTransport": "Mode de transport par défaut",
         "autoShowRoutes": "Afficher automatiquement les trajets",
         "saving": "Sauvegarde...",
-        "loading": "Chargement des préférences..."
+        "loading": "Chargement des préférences...",
+        "saveError": "Erreur lors de la sauvegarde des préférences"
+    },
+    "profile": {
+        "title": "Mon Profil",
+        "personalInfo": "Informations personnelles",
+        "changePassword": "Changer le mot de passe",
+        "language": "Langue",
+        "myTrips": "Mes Voyages",
+        "logout": "Se déconnecter",
+        "passwordForm": {
+            "currentPassword": "Mot de passe actuel",
+            "newPassword": "Nouveau mot de passe",
+            "confirmPassword": "Confirmer le nouveau mot de passe",
+            "update": "Mettre à jour",
+            "updating": "Mise à jour...",
+            "cancel": "Annuler"
+        },
+        "languageForm": {
+            "title": "Sélectionner la langue",
+            "french": "Français",
+            "english": "Anglais"
+        },
+        "tripsSection": {
+            "title": "Mes Voyages",
+            "noTrips": "Aucun voyage trouvé",
+            "loading": "Chargement des voyages...",
+            "viewTrip": "Voir le voyage",
+            "deleteTrip": "Supprimer",
+            "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce voyage ?",
+            "createdOn": "Créé le",
+            "modifiedOn": "Modifié le"
+        },
+        "errors": {
+            "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas",
+            "currentPasswordRequired": "Le mot de passe actuel est requis",
+            "newPasswordRequired": "Le nouveau mot de passe est requis",
+            "passwordUpdateError": "Erreur lors de la mise à jour du mot de passe",
+            "tripsLoadError": "Erreur lors du chargement des voyages",
+            "tripDeleteError": "Erreur lors de la suppression du voyage"
+        },
+        "success": {
+            "passwordUpdated": "Mot de passe mis à jour avec succès !"
+        }
+    },
+    "common": {
+        "loading": "Chargement...",
+        "saving": "Sauvegarde...",
+        "error": "Erreur",
+        "success": "Succès"
     }
 }

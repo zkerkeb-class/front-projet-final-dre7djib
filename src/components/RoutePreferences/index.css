@@ -56,6 +56,17 @@
     margin-top: 0.5rem;
 }
 
+.preferences-error {
+    text-align: center;
+    color: var(--error-text);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    border-radius: 4px;
+}
+
 @media (max-width: 768px) {
     .route-preferences {
         padding: 1rem;

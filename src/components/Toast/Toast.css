@@ -21,9 +21,17 @@
     border-left: 4px solid #dc3545;
 }
 
+.toast-container.success .toast-content {
+    border-left: 4px solid #28a745;
+}
+
 .toast-icon {
     margin-right: 12px;
     color: #dc3545;
+}
+
+.toast-container.success .toast-icon {
+    color: #28a745;
 }
 
 .toast-message {
