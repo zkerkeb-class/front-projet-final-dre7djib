@@ -7,6 +7,7 @@ import LoginPage from "../screens/LoginPage";
 import SignUpPage from "../screens/SignUpPage";
 import MapPage from "../screens/MapPage";
 import ProfilePage from "../screens/ProfilePage";
+import ContactPage from '../screens/ContactPage';
 
 let router = createBrowserRouter([
     { 
@@ -35,7 +36,11 @@ let router = createBrowserRouter([
             {
                 path: "/map/:id",
                 Component: MapPage,
-            }
+            },
+            {
+                path: '/contact',
+                element: <ContactPage />,
+            },
         ]
     }
 ]);
